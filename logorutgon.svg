@@ -4,10 +4,10 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       font-weight: 700;
       font-size: 44px;
-      fill: #000000;
+      fill: #EAE6DC;
       letter-spacing: 2px;
     }
   </style>
 
   <text x="5" y="45" class="lw">LW</text>
-</svg>
+</svg>>
