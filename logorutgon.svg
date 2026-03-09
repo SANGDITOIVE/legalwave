@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60">
+  <style>
+    .lw {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 44px;
+      fill: #000000;
+      letter-spacing: 2px;
+    }
+  </style>
+
+  <text x="5" y="45" class="lw">LW</text>
+</svg>
