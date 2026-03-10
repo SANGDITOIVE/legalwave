@@ -2,12 +2,13 @@
 <html lang="vi" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Dịch vụ pháp lý LegalWave — Gói tư vấn, soạn thảo hợp đồng, rà soát tài liệu, pháp lý startup. Báo giá minh bạch, không phí ẩn.">
 <meta name="keywords" content="dịch vụ pháp lý, gói tư vấn luật, soạn thảo hợp đồng, pháp lý startup, LegalWave services">
 <title>Dịch Vụ — LegalWave</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 /* ===== TOKENS ===== */
@@ -24,6 +25,8 @@
   --radius-md: 6px;
   --radius-pill: 100px;
   --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  --section-px: clamp(24px, 5vw, 56px);
+  --section-py: clamp(56px, 7vw, 112px);
 }
 [data-theme="dark"] {
   --bg: #0a1628; --bg2: #0d1f3c; --bg3: rgba(255,255,255,0.035); --bg4: rgba(255,255,255,0.06);
@@ -41,128 +44,335 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background var(--transition), color var(--transition); line-height: 1.6; }
-body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.3; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text);
+  overflow-x: hidden; transition: background var(--transition), color var(--transition);
+  line-height: 1.6;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.3;
+}
 
 h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; color: var(--heading); font-weight: 300; line-height: 1.1; }
-h1 { font-size: clamp(36px, 4.5vw, 64px); }
-h2 { font-size: clamp(28px, 3.5vw, 48px); }
+h1 { font-size: clamp(32px, 4.5vw, 64px); }
+h2 { font-size: clamp(24px, 3.5vw, 48px); }
 h3 { font-size: clamp(17px, 2vw, 24px); }
 em { font-style: italic; color: var(--green); }
 a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; }
 
-/* Buttons */
-.btn-primary { display: inline-block; background: var(--green); color: #fff; border: none; padding: 13px 28px; font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); cursor: pointer; transition: all var(--transition); }
+/* ===== BUTTONS ===== */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--green); color: #fff; border: none;
+  padding: 14px 28px; min-height: 44px;
+  font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(107,168,136,0.2); }
-.btn-gold { display: inline-block; background: var(--gold); color: var(--bg); padding: 13px 28px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); transition: all var(--transition); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: var(--bg);
+  padding: 14px 28px; min-height: 44px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius-sm); transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
-.btn-outline { display: inline-block; background: transparent; color: var(--text); border: 1px solid var(--border); padding: 13px 28px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); transition: all var(--transition); }
+.btn-gold:active { transform: translateY(0); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--text); border: 1px solid var(--border);
+  padding: 14px 28px; min-height: 44px;
+  font-size: 11.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius-sm); transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .btn-outline:hover { border-color: var(--green-border); color: var(--green); }
 
-/* Labels */
-.section-label { font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--green); display: flex; align-items: center; gap: 14px; margin-bottom: 16px; font-weight: 500; }
+/* ===== LABELS ===== */
+.section-label {
+  font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--green); display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px; font-weight: 500;
+}
 .section-label::before { content: ''; width: 28px; height: 1px; background: var(--green); flex-shrink: 0; }
 .section-label.gold { color: var(--gold); }
 .section-label.gold::before { background: var(--gold); }
 
-/* Reveal */
+/* ===== REVEAL ===== */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.visible { opacity: 1; transform: none; }
-.reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-d1, .reveal-d2, .reveal-d3 { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
 /* ===== NAV ===== */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 0 56px; height: 68px; display: flex; align-items: center; justify-content: space-between; background: var(--nav-bg); border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); transition: background var(--transition); }
-.nav-left { display: flex; align-items: center; gap: 20px; }
-.logo { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 600; letter-spacing: 0.08em; color: var(--heading); }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 0 var(--section-px); height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--nav-bg); border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: background var(--transition);
+  padding-left: max(var(--section-px), env(safe-area-inset-left));
+  padding-right: max(var(--section-px), env(safe-area-inset-right));
+}
+.nav-left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.logo {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+  font-family: 'Cormorant Garamond', serif; font-size: 21px;
+  font-weight: 600; letter-spacing: 0.08em; color: var(--heading);
+  -webkit-tap-highlight-color: transparent;
+}
 .logo span { color: var(--gold); }
-.logo em { font-style: normal; color: var(--green); font-size: 14px; letter-spacing: 0.04em; margin-left: 3px; }
-.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-muted); }
-.breadcrumb a { color: var(--text-muted); transition: color var(--transition); }
+.logo-sub {
+  font-style: normal; color: var(--green); font-size: 13px;
+  letter-spacing: 0.04em; margin-left: 2px;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11.5px; color: var(--text-muted); white-space: nowrap;
+}
+.breadcrumb a { color: var(--text-muted); transition: color var(--transition); padding: 2px 0; }
 .breadcrumb a:hover { color: var(--green); }
 .breadcrumb-sep { opacity: 0.4; }
 .breadcrumb-cur { color: var(--green); font-weight: 500; }
-nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
-nav ul a { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); transition: color var(--transition); font-weight: 500; }
+
+nav ul { list-style: none; display: flex; gap: 24px; align-items: center; }
+nav ul a {
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); transition: color var(--transition); font-weight: 500;
+  padding: 4px 0;
+}
 nav ul a:hover { color: var(--green); }
-.nav-cta { color: var(--green) !important; border: 1px solid var(--green-border) !important; padding: 6px 16px !important; border-radius: var(--radius-sm) !important; transition: all var(--transition) !important; }
+.nav-cta {
+  color: var(--green) !important; border: 1px solid var(--green-border) !important;
+  padding: 7px 16px !important; min-height: 34px;
+  border-radius: var(--radius-sm) !important; transition: all var(--transition) !important;
+  display: inline-flex !important; align-items: center !important;
+  -webkit-tap-highlight-color: transparent;
+}
 .nav-cta:hover { background: var(--green) !important; color: #fff !important; }
+
 .nav-right { display: flex; align-items: center; gap: 12px; }
-.lang-toggle { display: flex; align-items: center; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; }
-.lang-btn { padding: 5px 12px; cursor: pointer; transition: all var(--transition); color: var(--text-muted); background: transparent; border: none; font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; }
+
+.lang-toggle {
+  display: flex; align-items: center;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); overflow: hidden;
+}
+.lang-btn {
+  padding: 6px 12px; min-height: 32px; min-width: 36px;
+  cursor: pointer; transition: all var(--transition); color: var(--text-muted);
+  background: transparent; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.06em;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .lang-btn.active { background: var(--green); color: #fff; }
-.theme-toggle { width: 42px; height: 23px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-pill); cursor: pointer; position: relative; transition: all var(--transition); flex-shrink: 0; }
-.theme-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 15px; height: 15px; background: var(--green); border-radius: 50%; transition: transform var(--transition); }
+
+.theme-toggle {
+  width: 42px; height: 23px; min-width: 42px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); cursor: pointer;
+  position: relative; transition: all var(--transition); flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.theme-toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 15px; height: 15px; background: var(--green);
+  border-radius: 50%; transition: transform var(--transition);
+}
 [data-theme="light"] .theme-toggle::after { transform: translateX(19px); }
-.menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-.menu-btn span { display: block; width: 22px; height: 1.5px; background: var(--text); border-radius: 2px; }
-.mobile-nav { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 450; flex-direction: column; justify-content: center; align-items: center; gap: 28px; }
+
+.menu-btn {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 8px; background: none; border: none;
+  min-width: 44px; min-height: 44px; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.menu-btn span { display: block; width: 22px; height: 1.5px; background: var(--text); border-radius: 2px; transition: all var(--transition); }
+
+/* ===== MOBILE NAV ===== */
+.mobile-nav {
+  display: none; position: fixed; inset: 0; background: var(--bg);
+  z-index: 450; flex-direction: column; justify-content: center;
+  align-items: center; gap: 24px;
+}
 .mobile-nav.open { display: flex; }
-.mobile-nav a { font-family: 'Courier New', serif; font-size: 26px; font-weight: 300; color: var(--heading); transition: color var(--transition); }
+.mobile-nav a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 300; color: var(--heading); transition: color var(--transition);
+  padding: 8px 24px; min-height: 44px; display: flex; align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
 .mobile-nav a:hover { color: var(--green); }
-.mobile-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; }
+.mobile-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; font-size: 22px; color: var(--text-muted);
+  cursor: pointer; transition: color var(--transition);
+  min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; -webkit-tap-highlight-color: transparent;
+}
+.mobile-close:hover { color: var(--green); }
 
 /* ===== PAGE HEADER ===== */
 .page-header {
-  padding: 100px 56px 72px;
+  padding: 100px var(--section-px) 72px;
   max-width: 1260px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr auto;
   align-items: end; gap: 40px;
 }
-.page-eyebrow { font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--green); display: flex; align-items: center; gap: 14px; margin-bottom: 16px; font-weight: 500; }
+.page-eyebrow {
+  font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--green); display: flex; align-items: center; gap: 14px;
+  margin-bottom: 16px; font-weight: 500;
+}
 .page-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--green); }
-.page-desc { font-size: 15px; color: var(--text-dim); line-height: 1.8; max-width: 540px; font-weight: 300; margin-top: 16px; }
+.page-desc {
+  font-size: 15px; color: var(--text-dim); line-height: 1.8;
+  max-width: 540px; font-weight: 300; margin-top: 16px;
+}
 .page-stats { display: flex; gap: 28px; flex-shrink: 0; }
 .pstat { text-align: center; }
-.pstat-num { font-family: 'Courier New', serif; font-size: 38px; font-weight: 300; color: var(--green); line-height: 1; display: block; }
-.pstat-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 4px; display: block; }
+.pstat-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300;
+  color: var(--green); line-height: 1; display: block;
+}
+.pstat-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted); margin-top: 4px; display: block;
+}
 
 /* ===== STICKY TABS ===== */
 .service-tabs {
   position: sticky; top: 68px; z-index: 100;
   background: var(--bg2); border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(20px); transition: background var(--transition);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: background var(--transition);
 }
-.tabs-inner { max-width: 1260px; margin: 0 auto; padding: 0 56px; display: flex; overflow-x: auto; scrollbar-width: none; }
+.tabs-inner {
+  max-width: 1260px; margin: 0 auto;
+  padding: 0 var(--section-px);
+  display: flex; overflow-x: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
 .tabs-inner::-webkit-scrollbar { display: none; }
-.tab-item { padding: 15px 26px; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; transition: all var(--transition); border-bottom: 2px solid transparent; white-space: nowrap; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.tab-item {
+  padding: 15px 22px; min-height: 48px;
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); cursor: pointer; transition: all var(--transition);
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  text-decoration: none; display: flex; align-items: center; gap: 8px;
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .tab-item:hover { color: var(--green); }
 .tab-item.active { color: var(--green); border-bottom-color: var(--green); }
 
 /* ===== SERVICE SECTIONS ===== */
-.service-section { padding: 80px 56px; max-width: 1260px; margin: 0 auto; scroll-margin-top: 120px; }
+.service-section {
+  padding: var(--section-py) var(--section-px);
+  max-width: 1260px; margin: 0 auto;
+  scroll-margin-top: 120px;
+}
 .service-section:not(:last-of-type) { border-bottom: 1px solid var(--border); }
 
 .ss-header { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; margin-bottom: 52px; }
-.ss-icon-wrap { width: 76px; height: 76px; background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
-.ss-num { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; font-weight: 500; }
+.ss-icon-wrap {
+  width: 76px; height: 76px; background: var(--green-dim);
+  border: 1px solid var(--green-border); border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; flex-shrink: 0;
+}
+.ss-num {
+  font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 8px; display: flex; align-items: center;
+  gap: 12px; font-weight: 500;
+}
 .ss-num::before { content: ''; width: 20px; height: 1px; background: var(--green); }
-.ss-subtitle { font-size: 15px; color: var(--text-dim); line-height: 1.75; max-width: 580px; font-weight: 300; margin-top: 8px; }
+.ss-subtitle {
+  font-size: 15px; color: var(--text-dim); line-height: 1.75;
+  max-width: 580px; font-weight: 300; margin-top: 8px;
+}
 
 /* Concept box */
-.concept-box { background: var(--green-dim); border: 1px solid var(--green-border); border-left: 3px solid var(--green); border-radius: 0 var(--radius-md) var(--radius-md) 0; padding: 22px 26px; margin-bottom: 44px; }
-.concept-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 7px; font-weight: 500; }
-.concept-text { font-size: 14px; color: var(--text-dim); line-height: 1.8; font-style: italic; font-family: 'Courier New', serif; }
+.concept-box {
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  border-left: 3px solid var(--green);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 22px 26px; margin-bottom: 44px;
+}
+.concept-label {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 7px; font-weight: 500;
+}
+.concept-text {
+  font-size: 14px; color: var(--text-dim); line-height: 1.8;
+  font-style: italic; font-family: 'Cormorant Garamond', serif;
+}
 
 /* Product cards */
-.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 2px; margin-bottom: 44px; }
-.product-card { background: var(--bg3); border: 1px solid var(--border); padding: 28px 26px; transition: all 0.4s ease; position: relative; overflow: hidden; }
-.product-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--green); transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left; }
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2px; margin-bottom: 44px;
+}
+.product-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 28px 24px; transition: all 0.4s ease;
+  position: relative; overflow: hidden;
+}
+.product-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--green);
+  transform: scaleX(0); transition: transform 0.4s ease; transform-origin: left;
+}
 .product-card:hover::after { transform: scaleX(1); }
 .product-card:hover { border-color: var(--green-border); transform: translateY(-3px); box-shadow: var(--shadow); }
+
 .pc-icon { font-size: 26px; margin-bottom: 14px; display: block; }
-.pc-name { font-family: 'Courier New', serif; font-size: 18px; font-weight: 600; color: var(--heading); margin-bottom: 8px; }
+.pc-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--heading); margin-bottom: 8px; }
 .pc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
-.pc-price { font-size: 13px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.pc-price { font-size: 13px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .pc-price-note { font-size: 11px; color: var(--text-muted); font-weight: 400; }
 .pc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.ptag { font-size: 10px; letter-spacing: 0.07em; background: var(--green-dim); color: var(--green); padding: 3px 9px; border-radius: var(--radius-pill); font-weight: 500; }
+.ptag {
+  font-size: 10px; letter-spacing: 0.07em; background: var(--green-dim);
+  color: var(--green); padding: 3px 9px; border-radius: var(--radius-pill); font-weight: 500;
+}
 
 /* ===== PRICING ===== */
-.pricing-section { padding: 112px 56px; background: var(--bg2); position: relative; transition: background var(--transition); }
-.pricing-section::before, .pricing-section::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold-border), transparent); }
-.pricing-section::before { top: 0; } .pricing-section::after { bottom: 0; }
+.pricing-section {
+  padding: var(--section-py) var(--section-px);
+  background: var(--bg2); position: relative; transition: background var(--transition);
+}
+.pricing-section::before, .pricing-section::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-border), transparent);
+}
+.pricing-section::before { top: 0; }
+.pricing-section::after { bottom: 0; }
+
 .pricing-inner { max-width: 1260px; margin: 0 auto; }
 .pricing-header { text-align: center; margin-bottom: 64px; }
 .pricing-header h2 { margin-top: 12px; margin-bottom: 14px; }
@@ -171,14 +381,26 @@ nav ul a:hover { color: var(--green); }
 
 .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 40px; }
 
-.price-card { background: var(--bg3); border: 1px solid var(--border); padding: 36px 28px; transition: all 0.4s ease; position: relative; overflow: hidden; }
+.price-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 36px 28px; transition: all 0.4s ease; position: relative; overflow: hidden;
+}
 .price-card.featured { background: var(--green-dim); border-color: var(--green-border); }
-.price-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--green); }
+.price-card.featured::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--green);
+}
 .price-card:hover { border-color: var(--green-border); transform: translateY(-4px); box-shadow: var(--shadow); }
-.price-badge { display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--green); color: #fff; padding: 3px 10px; border-radius: var(--radius-pill); margin-bottom: 14px; font-weight: 600; }
-.price-name { font-family: 'Courier New', serif; font-size: 22px; font-weight: 600; color: var(--heading); margin-bottom: 6px; }
+.price-badge {
+  display: inline-block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--green); color: #fff; padding: 3px 10px;
+  border-radius: var(--radius-pill); margin-bottom: 14px; font-weight: 600;
+}
+.price-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--heading); margin-bottom: 6px; }
 .price-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 22px; }
-.price-amount { font-family: 'Courier New', serif; font-size: 40px; font-weight: 300; color: var(--green); line-height: 1; margin-bottom: 4px; }
+.price-amount {
+  font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300;
+  color: var(--green); line-height: 1; margin-bottom: 4px;
+}
 .price-amount span { font-size: 16px; font-weight: 400; }
 .price-period { font-size: 11.5px; color: var(--text-muted); margin-bottom: 26px; }
 .price-divider { height: 1px; background: var(--border); margin-bottom: 22px; }
@@ -190,9 +412,9 @@ nav ul a:hover { color: var(--green); }
 .pricing-note { text-align: center; font-size: 13px; color: var(--text-muted); line-height: 1.75; }
 .pricing-note a { color: var(--green); }
 
-/* ===== DETAIL GRID (steps/notes) ===== */
+/* ===== DETAIL GRID ===== */
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 36px; }
-.detail-col h4 { font-family: 'Courier New', serif; font-size: 20px; font-weight: 600; color: var(--heading); margin-bottom: 18px; }
+.detail-col h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--heading); margin-bottom: 18px; }
 .detail-list { display: flex; flex-direction: column; gap: 14px; }
 .detail-item { display: flex; align-items: flex-start; gap: 14px; }
 .di-icon { font-size: 18px; flex-shrink: 0; width: 28px; text-align: center; }
@@ -200,55 +422,108 @@ nav ul a:hover { color: var(--green); }
 .di-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
 /* Note box */
-.note-box { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 26px; display: flex; align-items: flex-start; gap: 14px; margin-bottom: 28px; }
+.note-box {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 20px 24px; display: flex; align-items: flex-start; gap: 14px; margin-bottom: 28px;
+}
 .note-icon { font-size: 20px; flex-shrink: 0; }
 .note-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.75; }
 
 /* CTA row */
-.cta-row { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.cta-row-text h4 { font-family: 'Courier New', serif; font-size: 20px; font-weight: 600; color: var(--heading); margin-bottom: 6px; }
+.cta-row {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 24px 28px; display: flex; align-items: center;
+  justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.cta-row-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--heading); margin-bottom: 6px; }
 .cta-row-text p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
-.cta-row-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.cta-row-btns { display: flex; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
 
 /* ===== FAQ ===== */
-.faq-section { padding: 112px 56px; max-width: 1260px; margin: 0 auto; }
-.faq-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: start; margin-top: 12px; }
+.faq-section {
+  padding: var(--section-py) var(--section-px);
+  max-width: 1260px; margin: 0 auto;
+}
+.faq-inner {
+  display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px;
+  align-items: start; margin-top: 12px;
+}
 .faq-side-desc { font-size: 14.5px; color: var(--text-muted); line-height: 1.8; font-weight: 300; margin-top: 14px; }
 .faq-list { display: flex; flex-direction: column; }
 .faq-item { border-bottom: 1px solid var(--border); }
-.faq-q { padding: 19px 0; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14.5px; font-weight: 500; color: var(--heading); transition: color var(--transition); }
+.faq-q {
+  padding: 19px 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: 14.5px; font-weight: 500; color: var(--heading);
+  transition: color var(--transition);
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  user-select: none;
+}
 .faq-q:hover { color: var(--green); }
-.faq-icon { width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--text-muted); transition: all var(--transition); }
+.faq-icon {
+  width: 28px; height: 28px; min-width: 28px; flex-shrink: 0;
+  border: 1px solid var(--border); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--text-muted); transition: all var(--transition);
+}
 .faq-item.open .faq-icon { border-color: var(--green); color: var(--green); transform: rotate(45deg); }
-.faq-a { max-height: 0; overflow: hidden; font-size: 13.5px; color: var(--text-muted); line-height: 1.8; transition: max-height 0.4s ease, padding 0.4s ease; }
+.faq-a {
+  max-height: 0; overflow: hidden; font-size: 13.5px; color: var(--text-muted);
+  line-height: 1.8; transition: max-height 0.4s ease, padding 0.4s ease;
+}
 .faq-item.open .faq-a { max-height: 300px; padding-bottom: 18px; }
 
 /* ===== FINAL CTA ===== */
-.final-cta { padding: 120px 56px; position: relative; overflow: hidden; }
-.final-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(107,168,136,0.06) 0%, transparent 70%); }
+.final-cta { padding: clamp(64px, 10vw, 120px) var(--section-px); position: relative; overflow: hidden; }
+.final-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(107,168,136,0.06) 0%, transparent 70%);
+}
 .cta-inner { max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
 .cta-inner h2 { margin-bottom: 18px; margin-top: 12px; }
 .cta-desc { font-size: 15px; color: var(--text-dim); line-height: 1.85; margin-bottom: 40px; font-weight: 300; }
 .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
 .cta-note { font-size: 12px; color: var(--text-muted); }
 
-/* ===== FOOTER ===== */
-.footer-mini { border-top: 1px solid var(--border); background: var(--bg2); padding: 32px 56px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; transition: background var(--transition); }
-.footer-logo { font-family: 'Courier New', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.08em; color: var(--heading); }
+/* ===== FOOTER MINI ===== */
+.footer-mini {
+  border-top: 1px solid var(--border); background: var(--bg2);
+  padding: 32px var(--section-px);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; transition: background var(--transition);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600;
+  letter-spacing: 0.08em; color: var(--heading); display: flex; align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
 .footer-logo span { color: var(--gold); }
 .footer-logo em { font-style: normal; color: var(--green); font-size: 13px; letter-spacing: 0.04em; margin-left: 3px; }
-.footer-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.footer-links a { font-size: 12px; letter-spacing: 0.06em; color: var(--text-muted); transition: color var(--transition); }
+.footer-links { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.footer-links a {
+  font-size: 12px; letter-spacing: 0.06em; color: var(--text-muted);
+  transition: color var(--transition); padding: 4px 0; min-height: 32px;
+  display: inline-flex; align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
 .footer-links a:hover { color: var(--green); }
 .footer-copy { font-size: 12px; color: var(--text-muted); }
 
-/* ===== RESPONSIVE ===== */
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+   ================================================================ */
+
+/* ===== TABLET: 1100px ===== */
 @media (max-width: 1100px) {
   nav { padding: 0 40px; }
   nav ul { display: none; }
   .menu-btn { display: flex; }
+  .breadcrumb { display: none; } /* avoid crowding on tablet */
+
   .page-header { grid-template-columns: 1fr; padding: 88px 40px 56px; }
-  .page-stats { justify-content: flex-start; }
+  .page-stats { justify-content: flex-start; gap: 20px; }
+
   .service-section { padding: 64px 40px; }
   .pricing-section { padding: 80px 40px; }
   .pricing-grid { grid-template-columns: 1fr 1fr; }
@@ -259,26 +534,86 @@ nav ul a:hover { color: var(--green); }
   .tabs-inner { padding: 0 40px; }
   .detail-grid { grid-template-columns: 1fr; gap: 32px; }
 }
+
+/* ===== MOBILE: 680px ===== */
 @media (max-width: 680px) {
-  nav { padding: 0 24px; }
-  .page-header { padding: 80px 24px 48px; }
-  .service-section, .faq-section, .pricing-section, .final-cta { padding: 56px 24px; }
+  nav { padding: 0 20px; height: 60px; }
+  .service-tabs { top: 60px; }
+
+  .page-header { padding: 80px 20px 48px; }
+  .page-stats { gap: 16px; flex-wrap: wrap; }
+  .pstat-num { font-size: 28px; }
+
+  .service-section,
+  .faq-section,
+  .pricing-section,
+  .final-cta { padding: 48px 20px; }
+
+  /* Pricing: single column */
   .pricing-grid { grid-template-columns: 1fr; }
-  .ss-header { grid-template-columns: 1fr; }
+  .price-card { padding: 28px 20px; }
+
+  /* Section header: stack */
+  .ss-header { grid-template-columns: 1fr; gap: 20px; }
   .ss-icon-wrap { width: 56px; height: 56px; font-size: 24px; }
+
+  /* Products: single column */
   .products-grid { grid-template-columns: 1fr; }
-  .footer-mini { padding: 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
-  .tabs-inner { padding: 0 24px; }
-  .page-stats { gap: 20px; }
+  .product-card { padding: 22px 18px; }
+
+  /* CTA row: stack */
+  .cta-row { flex-direction: column; align-items: flex-start; padding: 20px; }
+  .cta-row-btns { width: 100%; }
+  .cta-row-btns .btn-primary,
+  .cta-row-btns .btn-outline,
+  .cta-row-btns .btn-gold { width: 100%; }
+
+  /* Final CTA buttons: stack */
+  .cta-btns { flex-direction: column; align-items: center; }
+  .cta-btns .btn-primary,
+  .cta-btns .btn-gold,
+  .cta-btns .btn-outline { width: 100%; max-width: 320px; }
+
+  /* Footer */
+  .footer-mini { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px 20px; }
+  .footer-links { gap: 12px; }
+
+  /* FAQ side: hide desc on mobile (show question only) */
+  .faq-side-desc { font-size: 13px; }
+
+  /* Breadcrumb hidden on mobile already above */
+}
+
+/* ===== SMALL PHONES: 400px ===== */
+@media (max-width: 400px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+  .tab-item { padding: 12px 14px; font-size: 10.5px; }
+  .page-stats { flex-direction: row; gap: 12px; }
+  .pstat-num { font-size: 24px; }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-width: 812px) and (orientation: landscape) {
+  .page-header { padding-top: 76px; }
+}
+
+/* ===== TOUCH: disable hover transforms ===== */
+@media (hover: none) {
+  .product-card:hover,
+  .price-card:hover { transform: none; box-shadow: none; }
+  .product-card:hover::after { transform: scaleX(0); }
+  .btn-primary:hover,
+  .btn-gold:hover,
+  .btn-outline:hover { transform: none; }
 }
 </style>
 </head>
-
 <body>
 
 <!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu điều hướng" aria-modal="true">
+  <button class="mobile-close" id="mobileClose" aria-label="Đóng menu">✕</button>
   <a href="index.html" data-vi="Business Law" data-en="Business Law">Business Law</a>
   <a href="civil.html" data-vi="Civil Law" data-en="Civil Law">Civil Law</a>
   <a href="#consultation" data-vi="Tư vấn" data-en="Consultation">Tư vấn</a>
@@ -288,19 +623,22 @@ nav ul a:hover { color: var(--green); }
 </div>
 
 <!-- NAV -->
-<nav id="mainNav">
+<nav id="mainNav" role="navigation" aria-label="Điều hướng chính">
   <div class="nav-left">
-    <a href="civil.html" class="logo"><a href="civil.html" class="logo"><img src="logorutgon.svg" height="35"><span class="logo-sub">C-Services</span></a>
-    <div class="breadcrumb">
+    <a href="index.html" class="logo" aria-label="LegalWave - Trang chủ">
+      <img src="logorutgon.svg" height="30" alt="LegalWave logo" loading="eager">
+      <span class="logo-sub">C-Services</span>
+    </a>
+    <div class="breadcrumb" aria-label="Đường dẫn trang">
       <a href="index.html" data-vi="Business" data-en="Business">Business</a>
-      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-sep" aria-hidden="true">/</span>
       <a href="civil.html" data-vi="Civil" data-en="Civil">Civil</a>
-      <span class="breadcrumb-sep">/</span>
-      <span class="breadcrumb-cur" data-vi="Dịch vụ" data-en="Services">Dịch vụ</span>
+      <span class="breadcrumb-sep" aria-hidden="true">/</span>
+      <span class="breadcrumb-cur" aria-current="page" data-vi="Dịch vụ" data-en="Services">Dịch vụ</span>
     </div>
   </div>
 
-  <ul>
+  <ul role="list">
     <li><a href="#consultation" data-vi="Tư vấn" data-en="Consultation">Tư vấn</a></li>
     <li><a href="#contracts" data-vi="Hợp đồng" data-en="Contracts">Hợp đồng</a></li>
     <li><a href="#startup" data-vi="Startup" data-en="Startup">Startup</a></li>
@@ -309,12 +647,14 @@ nav ul a:hover { color: var(--green); }
   </ul>
 
   <div class="nav-right">
-    <div class="lang-toggle" id="langToggle">
-      <button class="lang-btn active" id="btnVI">VI</button>
-      <button class="lang-btn" id="btnEN">EN</button>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Chọn ngôn ngữ">
+      <button class="lang-btn active" id="btnVI" aria-pressed="true" aria-label="Tiếng Việt">VI</button>
+      <button class="lang-btn" id="btnEN" aria-pressed="false" aria-label="English">EN</button>
     </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
-    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối"></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Mở menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -327,38 +667,29 @@ nav ul a:hover { color: var(--green); }
       Từ tư vấn cơ bản đến hỗ trợ pháp lý chuyên sâu cho startup — báo giá rõ ràng trước khi bắt đầu, không phí ẩn, không bán những gì bạn chưa cần.
     </p>
   </div>
-  <div class="page-stats">
-    <div class="pstat">
-      <span class="pstat-num">12+</span>
-      <span class="pstat-label" data-vi="Loại dịch vụ" data-en="Service types">Loại dịch vụ</span>
-    </div>
-    <div class="pstat">
-      <span class="pstat-num">Free</span>
-      <span class="pstat-label" data-vi="Tư vấn lần đầu" data-en="First consult">Tư vấn lần đầu</span>
-    </div>
-    <div class="pstat">
-      <span class="pstat-num">3h</span>
-      <span class="pstat-label" data-vi="Phản hồi TB" data-en="Avg. response">Phản hồi TB</span>
-    </div>
+  <div class="page-stats" role="list" aria-label="Thống kê dịch vụ">
+    <div class="pstat" role="listitem"><span class="pstat-num">12+</span><span class="pstat-label" data-vi="Loại dịch vụ" data-en="Service types">Loại dịch vụ</span></div>
+    <div class="pstat" role="listitem"><span class="pstat-num">Free</span><span class="pstat-label" data-vi="Tư vấn lần đầu" data-en="First consult">Tư vấn lần đầu</span></div>
+    <div class="pstat" role="listitem"><span class="pstat-num">3h</span><span class="pstat-label" data-vi="Phản hồi TB" data-en="Avg. response">Phản hồi TB</span></div>
   </div>
 </div>
 
 <!-- STICKY TABS -->
-<div class="service-tabs" id="serviceTabs">
+<div class="service-tabs" id="serviceTabs" role="tablist" aria-label="Danh mục dịch vụ">
   <div class="tabs-inner">
-    <a class="tab-item active" href="#consultation" data-vi="💬 Tư vấn" data-en="💬 Consultation">💬 Tư vấn</a>
-    <a class="tab-item" href="#contracts" data-vi="📋 Hợp đồng" data-en="📋 Contracts">📋 Hợp đồng</a>
-    <a class="tab-item" href="#startup" data-vi="🚀 Startup" data-en="🚀 Startup">🚀 Startup</a>
-    <a class="tab-item" href="#civil" data-vi="⚖️ Dân sự" data-en="⚖️ Civil">⚖️ Dân sự</a>
-    <a class="tab-item" href="#packages" data-vi="💎 Bảng giá" data-en="💎 Pricing">💎 Bảng giá</a>
-    <a class="tab-item" href="#faq" data-vi="❓ FAQ" data-en="❓ FAQ">❓ FAQ</a>
+    <a class="tab-item active" href="#consultation" role="tab" data-vi="💬 Tư vấn" data-en="💬 Consultation">💬 Tư vấn</a>
+    <a class="tab-item" href="#contracts" role="tab" data-vi="📋 Hợp đồng" data-en="📋 Contracts">📋 Hợp đồng</a>
+    <a class="tab-item" href="#startup" role="tab" data-vi="🚀 Startup" data-en="🚀 Startup">🚀 Startup</a>
+    <a class="tab-item" href="#civil" role="tab" data-vi="⚖️ Dân sự" data-en="⚖️ Civil">⚖️ Dân sự</a>
+    <a class="tab-item" href="#packages" role="tab" data-vi="💎 Bảng giá" data-en="💎 Pricing">💎 Bảng giá</a>
+    <a class="tab-item" href="#faq" role="tab" data-vi="❓ FAQ" data-en="❓ FAQ">❓ FAQ</a>
   </div>
 </div>
 
 <!-- SECTION 1: CONSULTATION -->
 <section class="service-section" id="consultation">
   <div class="ss-header reveal">
-    <div class="ss-icon-wrap">💬</div>
+    <div class="ss-icon-wrap" aria-hidden="true">💬</div>
     <div>
       <div class="ss-num" data-vi="01 — Tư vấn pháp lý" data-en="01 — Legal Consultation">01 — Tư vấn pháp lý</div>
       <h2><span data-vi="Dịch vụ <em>tư vấn</em>" data-en="<em>Consultation</em> services">Dịch vụ <em>tư vấn</em></span></h2>
@@ -370,28 +701,26 @@ nav ul a:hover { color: var(--green); }
 
   <div class="concept-box reveal">
     <div class="concept-label" data-vi="Nguyên tắc của chúng tôi" data-en="Our principle">Nguyên tắc của chúng tôi</div>
-    <p class="concept-text" data-vi="&ldquo;Một câu hỏi pháp lý được trả lời đúng lúc có thể giúp bạn tránh hàng trăm triệu đồng thiệt hại và nhiều năm rắc rối.&rdquo;" data-en="&ldquo;A legal question answered at the right time can save you hundreds of millions of dong in damage and years of trouble.&rdquo;">
-      &ldquo;Một câu hỏi pháp lý được trả lời đúng lúc có thể giúp bạn tránh hàng trăm triệu đồng thiệt hại và nhiều năm rắc rối.&rdquo;
-    </p>
+    <p class="concept-text" data-vi="&ldquo;Một câu hỏi pháp lý được trả lời đúng lúc có thể giúp bạn tránh hàng trăm triệu đồng thiệt hại và nhiều năm rắc rối.&rdquo;" data-en="&ldquo;A legal question answered at the right time can save you hundreds of millions of dong in damage and years of trouble.&rdquo;">&ldquo;Một câu hỏi pháp lý được trả lời đúng lúc có thể giúp bạn tránh hàng trăm triệu đồng thiệt hại và nhiều năm rắc rối.&rdquo;</p>
   </div>
 
   <div class="products-grid">
     <div class="product-card reveal">
-      <span class="pc-icon">🆓</span>
+      <span class="pc-icon" aria-hidden="true">🆓</span>
       <div class="pc-name" data-vi="Tư vấn lần đầu" data-en="First Consultation">Tư vấn lần đầu</div>
       <p class="pc-desc" data-vi="30 phút qua điện thoại hoặc Zalo. Chúng tôi lắng nghe, phân tích và đưa ra định hướng ban đầu." data-en="30 minutes via phone or Zalo. We listen, analyze and provide initial guidance.">30 phút qua điện thoại hoặc Zalo. Chúng tôi lắng nghe, phân tích và đưa ra định hướng ban đầu.</p>
       <div class="pc-price">Miễn phí <span class="pc-price-note" data-vi="/ lần đầu" data-en="/ first time">/ lần đầu</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="30 phút" data-en="30 mins">30 phút</span><span class="ptag">Zalo / Phone</span></div>
     </div>
     <div class="product-card reveal reveal-d1">
-      <span class="pc-icon">📞</span>
+      <span class="pc-icon" aria-hidden="true">📞</span>
       <div class="pc-name" data-vi="Tư vấn chuyên sâu" data-en="In-depth Consultation">Tư vấn chuyên sâu</div>
       <p class="pc-desc" data-vi="60 phút phân tích chi tiết, chuẩn bị trước hồ sơ, trả lời toàn bộ câu hỏi, báo cáo tóm tắt bằng văn bản." data-en="60-minute detailed analysis, pre-prepared case files, full Q&A session, written summary report.">60 phút phân tích chi tiết, chuẩn bị trước hồ sơ, trả lời toàn bộ câu hỏi, báo cáo tóm tắt bằng văn bản.</p>
       <div class="pc-price">500.000đ <span class="pc-price-note" data-vi="/ buổi" data-en="/ session">/ buổi</span></div>
       <div class="pc-tags"><span class="ptag">60 phút</span><span class="ptag" data-vi="Văn bản tóm tắt" data-en="Written summary">Văn bản tóm tắt</span></div>
     </div>
     <div class="product-card reveal reveal-d2">
-      <span class="pc-icon">🔍</span>
+      <span class="pc-icon" aria-hidden="true">🔍</span>
       <div class="pc-name" data-vi="Phân tích rủi ro pháp lý" data-en="Legal Risk Analysis">Phân tích rủi ro pháp lý</div>
       <p class="pc-desc" data-vi="Đánh giá toàn diện rủi ro pháp lý của dự án/vụ việc, liệt kê điểm yếu và đề xuất biện pháp phòng ngừa." data-en="Comprehensive legal risk assessment of a project/case, identifying weaknesses and recommending preventive measures.">Đánh giá toàn diện rủi ro pháp lý, liệt kê điểm yếu và đề xuất biện pháp phòng ngừa cụ thể.</p>
       <div class="pc-price">1.200.000đ <span class="pc-price-note" data-vi="/ báo cáo" data-en="/ report">/ báo cáo</span></div>
@@ -403,17 +732,17 @@ nav ul a:hover { color: var(--green); }
     <div class="detail-col">
       <h4 data-vi="Hình thức tư vấn" data-en="Consultation formats">Hình thức tư vấn</h4>
       <div class="detail-list">
-        <div class="detail-item"><div class="di-icon">💬</div><div><div class="di-title" data-vi="Zalo / WhatsApp" data-en="Zalo / WhatsApp">Zalo / WhatsApp</div><div class="di-desc" data-vi="Nhanh nhất cho câu hỏi cơ bản, phản hồi trong 1–2 giờ làm việc" data-en="Fastest for basic questions, response within 1–2 working hours">Nhanh nhất cho câu hỏi cơ bản, phản hồi trong 1–2 giờ làm việc</div></div></div>
-        <div class="detail-item"><div class="di-icon">📹</div><div><div class="di-title" data-vi="Google Meet / Zoom" data-en="Google Meet / Zoom">Google Meet / Zoom</div><div class="di-desc" data-vi="Phù hợp cho vụ việc phức tạp, cần chia sẻ tài liệu và thảo luận chi tiết" data-en="Suitable for complex cases requiring document sharing and detailed discussion">Phù hợp cho vụ việc phức tạp, cần chia sẻ tài liệu và thảo luận chi tiết</div></div></div>
-        <div class="detail-item"><div class="di-icon">🏢</div><div><div class="di-title" data-vi="Gặp trực tiếp tại Hà Nội" data-en="In-person meeting in Hanoi">Gặp trực tiếp tại Hà Nội</div><div class="di-desc" data-vi="Đặt lịch trước, địa điểm linh hoạt theo yêu cầu khách hàng" data-en="Schedule in advance, flexible location per client request">Đặt lịch trước, địa điểm linh hoạt theo yêu cầu khách hàng</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">💬</div><div><div class="di-title">Zalo / WhatsApp</div><div class="di-desc" data-vi="Nhanh nhất cho câu hỏi cơ bản, phản hồi trong 1–2 giờ làm việc" data-en="Fastest for basic questions, response within 1–2 working hours">Nhanh nhất cho câu hỏi cơ bản, phản hồi trong 1–2 giờ làm việc</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">📹</div><div><div class="di-title">Google Meet / Zoom</div><div class="di-desc" data-vi="Phù hợp cho vụ việc phức tạp, cần chia sẻ tài liệu và thảo luận chi tiết" data-en="Suitable for complex cases requiring document sharing and detailed discussion">Phù hợp cho vụ việc phức tạp, cần chia sẻ tài liệu và thảo luận chi tiết</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">🏢</div><div><div class="di-title" data-vi="Gặp trực tiếp tại Hà Nội" data-en="In-person meeting in Hanoi">Gặp trực tiếp tại Hà Nội</div><div class="di-desc" data-vi="Đặt lịch trước, địa điểm linh hoạt theo yêu cầu khách hàng" data-en="Schedule in advance, flexible location per client request">Đặt lịch trước, địa điểm linh hoạt theo yêu cầu khách hàng</div></div></div>
       </div>
     </div>
     <div class="detail-col">
       <h4 data-vi="Sau tư vấn bạn sẽ nhận được" data-en="After consultation you'll receive">Sau tư vấn bạn sẽ nhận được</h4>
       <div class="detail-list">
-        <div class="detail-item"><div class="di-icon">📄</div><div><div class="di-title" data-vi="Tóm tắt bằng văn bản" data-en="Written summary">Tóm tắt bằng văn bản</div><div class="di-desc" data-vi="Ghi lại những điểm chính đã thảo luận, gửi qua email trong 24h" data-en="Records key points discussed, sent via email within 24h">Ghi lại những điểm chính đã thảo luận, gửi qua email trong 24h</div></div></div>
-        <div class="detail-item"><div class="di-icon">✅</div><div><div class="di-title" data-vi="Checklist hành động cụ thể" data-en="Specific action checklist">Checklist hành động cụ thể</div><div class="di-desc" data-vi="Các bước cần làm tiếp theo được liệt kê rõ ràng theo thứ tự ưu tiên" data-en="Next steps listed clearly in priority order">Các bước cần làm tiếp theo được liệt kê rõ ràng theo thứ tự ưu tiên</div></div></div>
-        <div class="detail-item"><div class="di-icon">🔗</div><div><div class="di-title" data-vi="Tài liệu tham khảo liên quan" data-en="Relevant reference materials">Tài liệu tham khảo liên quan</div><div class="di-desc" data-vi="Các điều luật, nghị định liên quan để bạn tự nghiên cứu thêm nếu muốn" data-en="Relevant laws and decrees for further self-research if desired">Các điều luật, nghị định liên quan để bạn tự nghiên cứu thêm nếu muốn</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">📄</div><div><div class="di-title" data-vi="Tóm tắt bằng văn bản" data-en="Written summary">Tóm tắt bằng văn bản</div><div class="di-desc" data-vi="Ghi lại những điểm chính đã thảo luận, gửi qua email trong 24h" data-en="Records key points discussed, sent via email within 24h">Ghi lại những điểm chính đã thảo luận, gửi qua email trong 24h</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">✅</div><div><div class="di-title" data-vi="Checklist hành động cụ thể" data-en="Specific action checklist">Checklist hành động cụ thể</div><div class="di-desc" data-vi="Các bước cần làm tiếp theo được liệt kê rõ ràng theo thứ tự ưu tiên" data-en="Next steps listed clearly in priority order">Các bước cần làm tiếp theo được liệt kê rõ ràng theo thứ tự ưu tiên</div></div></div>
+        <div class="detail-item"><div class="di-icon" aria-hidden="true">🔗</div><div><div class="di-title" data-vi="Tài liệu tham khảo liên quan" data-en="Relevant reference materials">Tài liệu tham khảo liên quan</div><div class="di-desc" data-vi="Các điều luật, nghị định liên quan để bạn tự nghiên cứu thêm nếu muốn" data-en="Relevant laws and decrees for further self-research if desired">Các điều luật, nghị định liên quan để bạn tự nghiên cứu thêm nếu muốn</div></div></div>
       </div>
     </div>
   </div>
@@ -424,7 +753,7 @@ nav ul a:hover { color: var(--green); }
       <p data-vi="Nhắn Zalo hoặc đặt lịch Google Meet — phản hồi trong 3 giờ làm việc." data-en="Message Zalo or book a Google Meet — response within 3 working hours.">Nhắn Zalo hoặc đặt lịch Google Meet — phản hồi trong 3 giờ làm việc.</p>
     </div>
     <div class="cta-row-btns">
-      <a href="tel:+84901234567" class="btn-primary">📞 Gọi ngay</a>
+      <a href="tel:+84865366368" class="btn-primary" data-vi="📞 Gọi ngay" data-en="📞 Call now">📞 Gọi ngay</a>
       <a href="mailto:hello@legalwave.vn" class="btn-outline">✉️ Email</a>
     </div>
   </div>
@@ -433,7 +762,7 @@ nav ul a:hover { color: var(--green); }
 <!-- SECTION 2: CONTRACTS -->
 <section class="service-section" id="contracts">
   <div class="ss-header reveal">
-    <div class="ss-icon-wrap">📋</div>
+    <div class="ss-icon-wrap" aria-hidden="true">📋</div>
     <div>
       <div class="ss-num" data-vi="02 — Hợp đồng" data-en="02 — Contracts">02 — Hợp đồng</div>
       <h2><span data-vi="Soạn thảo & <em>rà soát hợp đồng</em>" data-en="Contract <em>drafting & review</em>">Soạn thảo & <em>rà soát hợp đồng</em></span></h2>
@@ -445,39 +774,40 @@ nav ul a:hover { color: var(--green); }
 
   <div class="products-grid">
     <div class="product-card reveal">
-      <span class="pc-icon">📝</span>
+      <span class="pc-icon" aria-hidden="true">📝</span>
       <div class="pc-name" data-vi="Rà soát hợp đồng cơ bản" data-en="Basic Contract Review">Rà soát hợp đồng cơ bản</div>
       <p class="pc-desc" data-vi="Đọc và đánh giá hợp đồng đến 10 trang, phát hiện điều khoản bất lợi, tóm tắt rủi ro chính." data-en="Read and evaluate contracts up to 10 pages, identify unfavorable clauses, summarize key risks.">Đọc và đánh giá hợp đồng đến 10 trang, phát hiện điều khoản bất lợi, tóm tắt rủi ro chính.</p>
       <div class="pc-price">800.000đ <span class="pc-price-note" data-vi="/ hợp đồng" data-en="/ contract">/ hợp đồng</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="≤10 trang" data-en="≤10 pages">≤10 trang</span><span class="ptag" data-vi="48h hoàn thành" data-en="48h turnaround">48h hoàn thành</span></div>
     </div>
     <div class="product-card reveal reveal-d1">
-      <span class="pc-icon">✍️</span>
+      <span class="pc-icon" aria-hidden="true">✍️</span>
       <div class="pc-name" data-vi="Soạn hợp đồng theo yêu cầu" data-en="Custom Contract Drafting">Soạn hợp đồng theo yêu cầu</div>
       <p class="pc-desc" data-vi="Soạn thảo hợp đồng từ đầu theo đặc thù vụ việc, đảm bảo đầy đủ điều khoản bảo vệ quyền lợi hai chiều." data-en="Draft contracts from scratch based on specific case details, ensuring comprehensive clauses protecting both parties.">Soạn thảo hợp đồng từ đầu theo đặc thù vụ việc, đảm bảo đầy đủ điều khoản bảo vệ quyền lợi.</p>
       <div class="pc-price">1.500.000đ <span class="pc-price-note" data-vi="/ hợp đồng" data-en="/ contract">/ hợp đồng</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="Theo yêu cầu" data-en="Custom">Theo yêu cầu</span><span class="ptag" data-vi="2 lần sửa miễn phí" data-en="2 free revisions">2 lần sửa miễn phí</span></div>
     </div>
     <div class="product-card reveal reveal-d2">
-      <span class="pc-icon">⚡</span>
+      <span class="pc-icon" aria-hidden="true">⚡</span>
       <div class="pc-name" data-vi="Rà soát hợp đồng khẩn" data-en="Urgent Contract Review">Rà soát hợp đồng khẩn</div>
       <p class="pc-desc" data-vi="Cần ký gấp hôm nay? Chúng tôi rà soát trong 4–6 giờ làm việc, phát hiện rủi ro nghiêm trọng trước khi ký." data-en="Need to sign urgently today? We review in 4–6 working hours, identifying serious risks before signing.">Cần ký gấp? Rà soát trong 4–6 giờ làm việc, phát hiện rủi ro nghiêm trọng trước khi ký.</p>
       <div class="pc-price">1.200.000đ <span class="pc-price-note" data-vi="/ hợp đồng" data-en="/ contract">/ hợp đồng</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="4–6 giờ" data-en="4–6 hours">4–6 giờ</span><span class="ptag" data-vi="Ưu tiên khẩn" data-en="Priority">Ưu tiên khẩn</span></div>
     </div>
     <div class="product-card reveal">
-      <span class="pc-icon">🔄</span>
+      <span class="pc-icon" aria-hidden="true">🔄</span>
       <div class="pc-name" data-vi="Đàm phán điều khoản" data-en="Clause Negotiation">Đàm phán điều khoản</div>
       <p class="pc-desc" data-vi="Sau rà soát, hỗ trợ đàm phán sửa đổi điều khoản bất lợi với đối tác/đối tác ký kết." data-en="After review, support negotiating modification of unfavorable clauses with counterparties.">Sau rà soát, hỗ trợ đàm phán sửa đổi điều khoản bất lợi với đối tác ký kết.</p>
       <div class="pc-price" data-vi="Theo thỏa thuận" data-en="By agreement">Theo thỏa thuận</div>
-      <div class="pc-tags"><span class="ptag" data-vi="Hỗ trợ đàm phán" data-en="Negotiation support">Hỗ trợ đàm phán</span><span class="ptag" data-vi="Email/Zalo" data-en="Email/Zalo">Email/Zalo</span></div>
+      <div class="pc-tags"><span class="ptag" data-vi="Hỗ trợ đàm phán" data-en="Negotiation support">Hỗ trợ đàm phán</span><span class="ptag">Email/Zalo</span></div>
     </div>
   </div>
 
   <div class="note-box reveal">
-    <div class="note-icon">⚠️</div>
-    <p class="note-text" data-vi="<strong style='color:var(--heading)'>Lưu ý minh bạch:</strong> Với hợp đồng cần công chứng hoặc cần luật sư có chứng chỉ hành nghề ký tên, chúng tôi kết nối bạn với đối tác luật sư phù hợp trong mạng lưới của LegalWave. Phí sẽ được thông báo riêng." data-en="<strong style='color:var(--heading)'>Transparency note:</strong> For contracts requiring notarization or signatures by licensed lawyers, we connect you with appropriate lawyer partners in LegalWave's network. Fees will be communicated separately.">
-      <strong style="color:var(--heading)" data-vi="Lưu ý minh bạch:" data-en="Transparency note:">Lưu ý minh bạch:</strong> Với hợp đồng cần công chứng hoặc cần luật sư có chứng chỉ hành nghề ký tên, chúng tôi kết nối bạn với đối tác luật sư phù hợp. Phí sẽ được thông báo riêng.
+    <div class="note-icon" aria-hidden="true">⚠️</div>
+    <p class="note-text">
+      <strong style="color:var(--heading)" data-vi="Lưu ý minh bạch:" data-en="Transparency note:">Lưu ý minh bạch:</strong>
+      <span data-vi=" Với hợp đồng cần công chứng hoặc cần luật sư có chứng chỉ hành nghề ký tên, chúng tôi kết nối bạn với đối tác luật sư phù hợp. Phí sẽ được thông báo riêng." data-en=" For contracts requiring notarization or signatures by licensed lawyers, we connect you with appropriate lawyer partners in LegalWave's network. Fees will be communicated separately."> Với hợp đồng cần công chứng hoặc cần luật sư có chứng chỉ hành nghề ký tên, chúng tôi kết nối bạn với đối tác luật sư phù hợp. Phí sẽ được thông báo riêng.</span>
     </p>
   </div>
 </section>
@@ -485,7 +815,7 @@ nav ul a:hover { color: var(--green); }
 <!-- SECTION 3: STARTUP -->
 <section class="service-section" id="startup">
   <div class="ss-header reveal">
-    <div class="ss-icon-wrap" style="background:var(--gold-dim);border-color:var(--gold-border);">🚀</div>
+    <div class="ss-icon-wrap" style="background:var(--gold-dim);border-color:var(--gold-border);" aria-hidden="true">🚀</div>
     <div>
       <div class="ss-num" style="color:var(--gold)" data-vi="03 — Pháp lý startup" data-en="03 — Startup Legal">03 — Pháp lý startup</div>
       <h2><span data-vi="Pháp lý <em style='color:var(--gold)'>cho startup</em>" data-en="Legal for <em style='color:var(--gold)'>startups</em>">Pháp lý <em style="color:var(--gold)">cho startup</em></span></h2>
@@ -497,35 +827,33 @@ nav ul a:hover { color: var(--green); }
 
   <div class="concept-box reveal" style="background:var(--gold-dim);border-color:var(--gold-border);border-left-color:var(--gold)">
     <div class="concept-label" style="color:var(--gold)" data-vi="Tại sao startup cần pháp lý sớm?" data-en="Why do startups need legal early?">Tại sao startup cần pháp lý sớm?</div>
-    <p class="concept-text" data-vi="&ldquo;80% tranh chấp đồng sáng lập có thể phòng tránh nếu có vesting schedule và founder agreement rõ ràng ngay từ ngày đầu.&rdquo;" data-en="&ldquo;80% of co-founder disputes can be avoided with a clear vesting schedule and founder agreement from day one.&rdquo;">
-      &ldquo;80% tranh chấp đồng sáng lập có thể phòng tránh nếu có vesting schedule và founder agreement rõ ràng ngay từ ngày đầu.&rdquo;
-    </p>
+    <p class="concept-text" data-vi="&ldquo;80% tranh chấp đồng sáng lập có thể phòng tránh nếu có vesting schedule và founder agreement rõ ràng ngay từ ngày đầu.&rdquo;" data-en="&ldquo;80% of co-founder disputes can be avoided with a clear vesting schedule and founder agreement from day one.&rdquo;">&ldquo;80% tranh chấp đồng sáng lập có thể phòng tránh nếu có vesting schedule và founder agreement rõ ràng ngay từ ngày đầu.&rdquo;</p>
   </div>
 
   <div class="products-grid">
     <div class="product-card reveal" style="border-color:var(--gold-border)">
-      <span class="pc-icon">🏢</span>
+      <span class="pc-icon" aria-hidden="true">🏢</span>
       <div class="pc-name" data-vi="Thành lập doanh nghiệp" data-en="Business Incorporation">Thành lập doanh nghiệp</div>
       <p class="pc-desc" data-vi="Tư vấn loại hình DN phù hợp, hỗ trợ hồ sơ đăng ký, tư vấn cơ cấu góp vốn ban đầu và các thủ tục sau thành lập." data-en="Advise on appropriate business type, support registration documents, advise on initial capital structure and post-incorporation procedures.">Tư vấn loại hình DN phù hợp, hỗ trợ hồ sơ đăng ký, tư vấn cơ cấu góp vốn ban đầu.</p>
       <div class="pc-price" style="color:var(--gold)">2.000.000đ <span class="pc-price-note" data-vi="/ trọn gói" data-en="/ full package">/ trọn gói</span></div>
-      <div class="pc-tags" style="--green:var(--gold);--green-dim:var(--gold-dim)"><span class="ptag" style="background:var(--gold-dim);color:var(--gold)" data-vi="Trọn gói" data-en="Full package">Trọn gói</span><span class="ptag" style="background:var(--gold-dim);color:var(--gold)" data-vi="7–10 ngày" data-en="7–10 days">7–10 ngày</span></div>
+      <div class="pc-tags"><span class="ptag" style="background:var(--gold-dim);color:var(--gold)" data-vi="Trọn gói" data-en="Full package">Trọn gói</span><span class="ptag" style="background:var(--gold-dim);color:var(--gold)" data-vi="7–10 ngày" data-en="7–10 days">7–10 ngày</span></div>
     </div>
     <div class="product-card reveal reveal-d1">
-      <span class="pc-icon">🤝</span>
+      <span class="pc-icon" aria-hidden="true">🤝</span>
       <div class="pc-name" data-vi="Founder Agreement" data-en="Founder Agreement">Founder Agreement</div>
       <p class="pc-desc" data-vi="Hợp đồng đồng sáng lập với vesting schedule, điều khoản rời công ty, phân chia cổ phần và giải quyết tranh chấp." data-en="Co-founder agreement with vesting schedule, departure clauses, equity distribution and dispute resolution.">Hợp đồng đồng sáng lập với vesting schedule, điều khoản rời công ty, phân chia cổ phần và giải quyết tranh chấp.</p>
       <div class="pc-price">1.800.000đ <span class="pc-price-note" data-vi="/ hợp đồng" data-en="/ agreement">/ hợp đồng</span></div>
       <div class="pc-tags"><span class="ptag">Vesting</span><span class="ptag">Cap table</span></div>
     </div>
     <div class="product-card reveal reveal-d2">
-      <span class="pc-icon">💰</span>
+      <span class="pc-icon" aria-hidden="true">💰</span>
       <div class="pc-name" data-vi="Chuẩn bị gọi vốn" data-en="Fundraising Prep">Chuẩn bị gọi vốn</div>
       <p class="pc-desc" data-vi="Rà soát term sheet, tư vấn cơ cấu deal, điều khoản bảo vệ founder, anti-dilution và quyền ưu tiên mua cổ phần." data-en="Review term sheets, advise on deal structure, founder protection clauses, anti-dilution and pre-emptive rights.">Rà soát term sheet, tư vấn cơ cấu deal, điều khoản bảo vệ founder, anti-dilution.</p>
       <div class="pc-price">3.000.000đ <span class="pc-price-note" data-vi="/ deal" data-en="/ deal">/ deal</span></div>
       <div class="pc-tags"><span class="ptag">Term sheet</span><span class="ptag">Due diligence</span></div>
     </div>
     <div class="product-card reveal">
-      <span class="pc-icon">™️</span>
+      <span class="pc-icon" aria-hidden="true">™️</span>
       <div class="pc-name" data-vi="Đăng ký nhãn hiệu" data-en="Trademark Registration">Đăng ký nhãn hiệu</div>
       <p class="pc-desc" data-vi="Tra cứu, đánh giá khả năng bảo hộ, chuẩn bị và nộp hồ sơ đăng ký nhãn hiệu tại Cục SHTT." data-en="Search, assess protectability, prepare and submit trademark registration at NOIP.">Tra cứu, đánh giá khả năng bảo hộ, chuẩn bị và nộp hồ sơ đăng ký nhãn hiệu tại Cục SHTT.</p>
       <div class="pc-price">2.500.000đ <span class="pc-price-note" data-vi="/ nhãn hiệu" data-en="/ trademark">/ nhãn hiệu</span></div>
@@ -537,7 +865,7 @@ nav ul a:hover { color: var(--green); }
 <!-- SECTION 4: CIVIL -->
 <section class="service-section" id="civil">
   <div class="ss-header reveal">
-    <div class="ss-icon-wrap">⚖️</div>
+    <div class="ss-icon-wrap" aria-hidden="true">⚖️</div>
     <div>
       <div class="ss-num" data-vi="04 — Dịch vụ dân sự" data-en="04 — Civil Services">04 — Dịch vụ dân sự</div>
       <h2><span data-vi="Pháp lý <em>dân sự & gia đình</em>" data-en="<em>Civil & family</em> legal">Pháp lý <em>dân sự & gia đình</em></span></h2>
@@ -549,21 +877,21 @@ nav ul a:hover { color: var(--green); }
 
   <div class="products-grid">
     <div class="product-card reveal">
-      <span class="pc-icon">🏠</span>
+      <span class="pc-icon" aria-hidden="true">🏠</span>
       <div class="pc-name" data-vi="Tư vấn tranh chấp đất đai" data-en="Property Dispute Consultation">Tư vấn tranh chấp đất đai</div>
       <p class="pc-desc" data-vi="Phân tích hồ sơ đất đai, xác định cơ sở pháp lý, đề xuất phương án hòa giải hoặc khởi kiện." data-en="Analyze land documents, identify legal grounds, propose mediation or litigation options.">Phân tích hồ sơ đất đai, xác định cơ sở pháp lý, đề xuất phương án hòa giải hoặc khởi kiện.</p>
       <div class="pc-price">1.000.000đ <span class="pc-price-note" data-vi="/ vụ" data-en="/ case">/ vụ</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="Đất đai" data-en="Property">Đất đai</span><span class="ptag" data-vi="Phân tích" data-en="Analysis">Phân tích</span></div>
     </div>
     <div class="product-card reveal reveal-d1">
-      <span class="pc-icon">💍</span>
+      <span class="pc-icon" aria-hidden="true">💍</span>
       <div class="pc-name" data-vi="Tư vấn hôn nhân & ly hôn" data-en="Marriage & Divorce Consultation">Tư vấn hôn nhân & ly hôn</div>
       <p class="pc-desc" data-vi="Tư vấn thủ tục ly hôn, quyền nuôi con, cấp dưỡng, phân chia tài sản. Hỗ trợ soạn đơn và hồ sơ nộp tòa." data-en="Advise on divorce procedures, child custody, alimony, asset division. Help draft petitions and court documents.">Tư vấn thủ tục ly hôn, quyền nuôi con, cấp dưỡng, phân chia tài sản. Hỗ trợ soạn hồ sơ.</p>
       <div class="pc-price">800.000đ <span class="pc-price-note" data-vi="/ buổi" data-en="/ session">/ buổi</span></div>
       <div class="pc-tags"><span class="ptag" data-vi="Ly hôn" data-en="Divorce">Ly hôn</span><span class="ptag" data-vi="Tài sản" data-en="Assets">Tài sản</span></div>
     </div>
     <div class="product-card reveal reveal-d2">
-      <span class="pc-icon">📜</span>
+      <span class="pc-icon" aria-hidden="true">📜</span>
       <div class="pc-name" data-vi="Soạn thảo di chúc" data-en="Will Drafting">Soạn thảo di chúc</div>
       <p class="pc-desc" data-vi="Soạn di chúc hợp pháp theo đúng quy định Bộ luật Dân sự, đảm bảo hiệu lực pháp lý và phân chia rõ ràng." data-en="Draft legally valid wills per Civil Code requirements, ensuring legal validity and clear distribution.">Soạn di chúc hợp pháp theo đúng quy định Bộ luật Dân sự, đảm bảo hiệu lực pháp lý và phân chia rõ ràng.</p>
       <div class="pc-price">1.200.000đ <span class="pc-price-note" data-vi="/ di chúc" data-en="/ will">/ di chúc</span></div>
@@ -602,13 +930,13 @@ nav ul a:hover { color: var(--green); }
         <div class="price-period" data-vi="sau đó từ 500.000đ / buổi" data-en="then from 500,000đ / session">sau đó từ 500.000đ / buổi</div>
         <div class="price-divider"></div>
         <div class="price-features">
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Tư vấn lần đầu miễn phí (30 phút)" data-en="Free first consultation (30 min)">Tư vấn lần đầu miễn phí (30 phút)</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Phản hồi trong 3 giờ làm việc" data-en="Response within 3 working hours">Phản hồi trong 3 giờ làm việc</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Hỗ trợ qua Zalo / Email" data-en="Support via Zalo / Email">Hỗ trợ qua Zalo / Email</span></div>
-          <div class="pf-item"><span class="pf-cross">—</span><span style="opacity:0.45" data-vi="Tóm tắt văn bản" data-en="Written summary">Tóm tắt văn bản</span></div>
-          <div class="pf-item"><span class="pf-cross">—</span><span style="opacity:0.45" data-vi="Rà soát hợp đồng" data-en="Contract review">Rà soát hợp đồng</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Tư vấn lần đầu miễn phí (30 phút)" data-en="Free first consultation (30 min)">Tư vấn lần đầu miễn phí (30 phút)</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Phản hồi trong 3 giờ làm việc" data-en="Response within 3 working hours">Phản hồi trong 3 giờ làm việc</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Hỗ trợ qua Zalo / Email" data-en="Support via Zalo / Email">Hỗ trợ qua Zalo / Email</span></div>
+          <div class="pf-item"><span class="pf-cross" aria-hidden="true">—</span><span style="opacity:0.45" data-vi="Tóm tắt văn bản" data-en="Written summary">Tóm tắt văn bản</span></div>
+          <div class="pf-item"><span class="pf-cross" aria-hidden="true">—</span><span style="opacity:0.45" data-vi="Rà soát hợp đồng" data-en="Contract review">Rà soát hợp đồng</span></div>
         </div>
-        <a href="#contact" class="btn-outline" style="width:100%;text-align:center;" data-vi="Bắt đầu miễn phí" data-en="Start for free">Bắt đầu miễn phí</a>
+        <a href="#contact" class="btn-outline" style="width:100%;justify-content:center;" data-vi="Bắt đầu miễn phí" data-en="Start for free">Bắt đầu miễn phí</a>
       </div>
 
       <div class="price-card featured reveal reveal-d1">
@@ -619,34 +947,35 @@ nav ul a:hover { color: var(--green); }
         <div class="price-period" data-vi="hoặc từng dịch vụ theo yêu cầu" data-en="or per-service as needed">hoặc từng dịch vụ theo yêu cầu</div>
         <div class="price-divider"></div>
         <div class="price-features">
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="4 buổi tư vấn chuyên sâu / tháng" data-en="4 in-depth consultation sessions / month">4 buổi tư vấn chuyên sâu / tháng</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Rà soát 2 hợp đồng / tháng" data-en="Review 2 contracts / month">Rà soát 2 hợp đồng / tháng</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Tóm tắt văn bản sau mỗi buổi" data-en="Written summary after each session">Tóm tắt văn bản sau mỗi buổi</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Hỗ trợ khẩn cấp ưu tiên (1h)" data-en="Priority urgent support (1h)">Hỗ trợ khẩn cấp ưu tiên (1h)</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Kết nối luật sư hành nghề khi cần" data-en="Connect to licensed lawyers when needed">Kết nối luật sư hành nghề khi cần</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="4 buổi tư vấn chuyên sâu / tháng" data-en="4 in-depth consultation sessions / month">4 buổi tư vấn chuyên sâu / tháng</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Rà soát 2 hợp đồng / tháng" data-en="Review 2 contracts / month">Rà soát 2 hợp đồng / tháng</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Tóm tắt văn bản sau mỗi buổi" data-en="Written summary after each session">Tóm tắt văn bản sau mỗi buổi</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Hỗ trợ khẩn cấp ưu tiên (1h)" data-en="Priority urgent support (1h)">Hỗ trợ khẩn cấp ưu tiên (1h)</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Kết nối luật sư hành nghề khi cần" data-en="Connect to licensed lawyers when needed">Kết nối luật sư hành nghề khi cần</span></div>
         </div>
-        <a href="#contact" class="btn-primary" style="width:100%;text-align:center;" data-vi="Đăng ký gói này" data-en="Get this plan">Đăng ký gói này</a>
+        <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;" data-vi="Đăng ký gói này" data-en="Get this plan">Đăng ký gói này</a>
       </div>
 
       <div class="price-card reveal reveal-d2">
-        <div class="price-name" data-vi="Startup Plus" data-en="Startup Plus">Startup Plus</div>
+        <div class="price-name">Startup Plus</div>
         <p class="price-desc" data-vi="Dành riêng cho startup giai đoạn chuẩn bị gọi vốn hoặc mở rộng quy mô" data-en="Exclusively for startups preparing for fundraising or scaling">Dành riêng cho startup giai đoạn chuẩn bị gọi vốn hoặc mở rộng quy mô</p>
         <div class="price-amount">5.000.000đ <span data-vi="/ tháng" data-en="/ month">/ tháng</span></div>
         <div class="price-period" data-vi="tối thiểu 3 tháng" data-en="minimum 3 months">tối thiểu 3 tháng</div>
         <div class="price-divider"></div>
         <div class="price-features">
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Tất cả tính năng gói Tiêu chuẩn" data-en="All Standard plan features">Tất cả tính năng gói Tiêu chuẩn</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Hỗ trợ gọi vốn: term sheet, due diligence" data-en="Fundraising support: term sheet, due diligence">Hỗ trợ gọi vốn: term sheet, due diligence</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Cấu trúc equity & vesting schedule" data-en="Equity structure & vesting schedule">Cấu trúc equity & vesting schedule</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Đăng ký nhãn hiệu included" data-en="Trademark registration included">Đăng ký nhãn hiệu included</span></div>
-          <div class="pf-item"><span class="pf-check">✓</span><span data-vi="Dedicated contact người phụ trách riêng" data-en="Dedicated contact person">Dedicated contact người phụ trách riêng</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Tất cả tính năng gói Tiêu chuẩn" data-en="All Standard plan features">Tất cả tính năng gói Tiêu chuẩn</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Hỗ trợ gọi vốn: term sheet, due diligence" data-en="Fundraising support: term sheet, due diligence">Hỗ trợ gọi vốn: term sheet, due diligence</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Cấu trúc equity & vesting schedule" data-en="Equity structure & vesting schedule">Cấu trúc equity & vesting schedule</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Đăng ký nhãn hiệu included" data-en="Trademark registration included">Đăng ký nhãn hiệu included</span></div>
+          <div class="pf-item"><span class="pf-check" aria-hidden="true">✓</span><span data-vi="Dedicated contact người phụ trách riêng" data-en="Dedicated contact person">Dedicated contact người phụ trách riêng</span></div>
         </div>
-        <a href="#contact" class="btn-gold" style="width:100%;text-align:center;" data-vi="Liên hệ tư vấn" data-en="Contact for advice">Liên hệ tư vấn</a>
+        <a href="#contact" class="btn-gold" style="width:100%;justify-content:center;" data-vi="Liên hệ tư vấn" data-en="Contact for advice">Liên hệ tư vấn</a>
       </div>
     </div>
 
-    <p class="pricing-note reveal" data-vi="Tất cả mức giá chưa bao gồm VAT. Các vụ việc đặc thù hoặc phức tạp sẽ được báo giá riêng sau khi đánh giá. <a href='#contact'>Liên hệ để được tư vấn chọn gói phù hợp →</a>" data-en="All prices exclude VAT. Unique or complex cases will be quoted separately after assessment. <a href='#contact'>Contact us for package recommendation →</a>">
-      Tất cả mức giá chưa bao gồm VAT. Các vụ việc đặc thù sẽ được báo giá riêng sau khi đánh giá. <a href="#contact" data-vi="Liên hệ để được tư vấn chọn gói phù hợp →" data-en="Contact us for package recommendation →">Liên hệ để được tư vấn chọn gói phù hợp →</a>
+    <p class="pricing-note reveal">
+      <span data-vi="Tất cả mức giá chưa bao gồm VAT. Các vụ việc đặc thù sẽ được báo giá riêng sau khi đánh giá." data-en="All prices exclude VAT. Unique or complex cases will be quoted separately after assessment.">Tất cả mức giá chưa bao gồm VAT. Các vụ việc đặc thù sẽ được báo giá riêng sau khi đánh giá.</span>
+      <a href="#contact" data-vi=" Liên hệ để được tư vấn chọn gói phù hợp →" data-en=" Contact us for package recommendation →"> Liên hệ để được tư vấn chọn gói phù hợp →</a>
     </p>
   </div>
 </section>
@@ -662,44 +991,44 @@ nav ul a:hover { color: var(--green); }
         Những câu hỏi phổ biến nhất từ khách hàng khi tìm hiểu về dịch vụ của LegalWave. Vẫn còn thắc mắc?
       </p>
       <br>
-      <a href="#contact" class="btn-outline" style="font-size:12px;padding:10px 22px;" data-vi="Hỏi trực tiếp →" data-en="Ask directly →">Hỏi trực tiếp →</a>
+      <a href="#contact" class="btn-outline" style="font-size:12px;padding:10px 22px;min-height:40px;" data-vi="Hỏi trực tiếp →" data-en="Ask directly →">Hỏi trực tiếp →</a>
     </div>
 
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q">
+    <div class="faq-list" role="list">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
           <span data-vi="Tư vấn lần đầu miễn phí có ràng buộc không?" data-en="Does the free first consultation have any obligations?">Tư vấn lần đầu miễn phí có ràng buộc không?</span>
-          <span class="faq-icon">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </div>
-        <div class="faq-a" data-vi="Hoàn toàn không. Buổi tư vấn đầu tiên 30 phút là để chúng tôi hiểu vấn đề của bạn và bạn đánh giá xem có muốn tiếp tục hợp tác không. Không có bất kỳ cam kết hay ký kết gì sau buổi này." data-en="Absolutely not. The first 30-minute consultation is for us to understand your issue and for you to evaluate whether you want to continue. There are no commitments or agreements after this session.">Hoàn toàn không. Buổi tư vấn đầu tiên 30 phút là để chúng tôi hiểu vấn đề của bạn và bạn đánh giá có muốn tiếp tục không. Không có bất kỳ cam kết nào sau buổi này.</div>
+        <div class="faq-a" data-vi="Hoàn toàn không. Buổi tư vấn đầu tiên 30 phút là để chúng tôi hiểu vấn đề của bạn và bạn đánh giá có muốn tiếp tục không. Không có bất kỳ cam kết nào sau buổi này." data-en="Absolutely not. The first 30-minute consultation is for us to understand your issue and for you to evaluate whether you want to continue. There are no commitments or agreements after this session.">Hoàn toàn không. Buổi tư vấn đầu tiên 30 phút là để chúng tôi hiểu vấn đề của bạn và bạn đánh giá có muốn tiếp tục không. Không có bất kỳ cam kết nào sau buổi này.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
           <span data-vi="Thanh toán như thế nào?" data-en="How do I pay?">Thanh toán như thế nào?</span>
-          <span class="faq-icon">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </div>
-        <div class="faq-a" data-vi="Chuyển khoản ngân hàng sau khi nhận báo giá xác nhận bằng văn bản. Với gói tháng, thanh toán vào đầu tháng. Với từng dịch vụ, thanh toán sau khi hoàn thành và bàn giao kết quả. Không yêu cầu đặt cọc trước." data-en="Bank transfer after receiving a written quote confirmation. For monthly packages, payment at the start of the month. For individual services, payment after completion and delivery. No deposit required.">Chuyển khoản ngân hàng sau khi nhận báo giá xác nhận bằng văn bản. Với gói tháng, thanh toán đầu tháng. Với từng dịch vụ, thanh toán sau khi hoàn thành và bàn giao. Không yêu cầu đặt cọc.</div>
+        <div class="faq-a" data-vi="Chuyển khoản ngân hàng sau khi nhận báo giá xác nhận bằng văn bản. Với gói tháng, thanh toán đầu tháng. Với từng dịch vụ, thanh toán sau khi hoàn thành và bàn giao. Không yêu cầu đặt cọc." data-en="Bank transfer after receiving a written quote confirmation. For monthly packages, payment at the start of the month. For individual services, payment after completion and delivery. No deposit required.">Chuyển khoản ngân hàng sau khi nhận báo giá xác nhận bằng văn bản. Với gói tháng, thanh toán đầu tháng. Với từng dịch vụ, thanh toán sau khi hoàn thành và bàn giao. Không yêu cầu đặt cọc.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
           <span data-vi="Nếu không hài lòng với kết quả thì sao?" data-en="What if I'm not satisfied with the results?">Nếu không hài lòng với kết quả thì sao?</span>
-          <span class="faq-icon">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </div>
-        <div class="faq-a" data-vi="Chúng tôi cam kết sửa đổi miễn phí nếu kết quả chưa đáp ứng yêu cầu đã thống nhất trước đó. Với hợp đồng soạn thảo, bao gồm 2 lần sửa đổi miễn phí. Với tư vấn, nếu bạn cảm thấy chưa rõ, chúng tôi hỗ trợ làm rõ thêm không tính phí." data-en="We commit to free revisions if results don't meet previously agreed requirements. Contract drafting includes 2 free revisions. For consultations, if anything is unclear, we provide additional clarification at no charge.">Chúng tôi cam kết sửa đổi miễn phí nếu kết quả chưa đáp ứng yêu cầu đã thống nhất. Hợp đồng soạn thảo bao gồm 2 lần sửa miễn phí. Tư vấn chưa rõ được làm rõ thêm không tính phí.</div>
+        <div class="faq-a" data-vi="Chúng tôi cam kết sửa đổi miễn phí nếu kết quả chưa đáp ứng yêu cầu đã thống nhất. Hợp đồng soạn thảo bao gồm 2 lần sửa miễn phí. Tư vấn chưa rõ được làm rõ thêm không tính phí." data-en="We commit to free revisions if results don't meet previously agreed requirements. Contract drafting includes 2 free revisions. For consultations, if anything is unclear, we provide additional clarification at no charge.">Chúng tôi cam kết sửa đổi miễn phí nếu kết quả chưa đáp ứng yêu cầu đã thống nhất. Hợp đồng soạn thảo bao gồm 2 lần sửa miễn phí. Tư vấn chưa rõ được làm rõ thêm không tính phí.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
           <span data-vi="Dịch vụ có hỗ trợ tiếng Anh không?" data-en="Do you offer services in English?">Dịch vụ có hỗ trợ tiếng Anh không?</span>
-          <span class="faq-icon">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </div>
         <div class="faq-a" data-vi="Có. Chúng tôi hỗ trợ đầy đủ bằng tiếng Anh — từ tư vấn, soạn thảo hợp đồng song ngữ đến hỗ trợ thủ tục hành chính cho doanh nhân nước ngoài tại Việt Nam." data-en="Yes. We provide full support in English — from consultations and bilingual contract drafting to administrative support for foreign entrepreneurs in Vietnam.">Có. Chúng tôi hỗ trợ đầy đủ bằng tiếng Anh — từ tư vấn, soạn thảo hợp đồng song ngữ đến hỗ trợ thủ tục hành chính cho doanh nhân nước ngoài tại Việt Nam.</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
           <span data-vi="Thời gian hoàn thành các dịch vụ là bao lâu?" data-en="How long does each service take to complete?">Thời gian hoàn thành các dịch vụ là bao lâu?</span>
-          <span class="faq-icon">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </div>
-        <div class="faq-a" data-vi="Tư vấn: phản hồi trong 3h, buổi tư vấn trong ngày hoặc hôm sau. Rà soát hợp đồng cơ bản: 48h. Rà soát khẩn: 4–6h. Soạn hợp đồng từ đầu: 3–5 ngày làm việc. Thành lập doanh nghiệp: 7–10 ngày. Đăng ký nhãn hiệu: khoảng 12 tháng (theo thời gian xử lý của Cục SHTT)." data-en="Consultation: response in 3h, session same day or next day. Basic contract review: 48h. Urgent review: 4–6h. Contract drafting from scratch: 3–5 business days. Business incorporation: 7–10 days. Trademark registration: approximately 12 months (per NOIP processing time).">Tư vấn: phản hồi 3h, buổi trong ngày hoặc hôm sau. Rà soát cơ bản: 48h. Rà soát khẩn: 4–6h. Soạn HĐ từ đầu: 3–5 ngày. Thành lập DN: 7–10 ngày. Nhãn hiệu: ~12 tháng theo Cục SHTT.</div>
+        <div class="faq-a" data-vi="Tư vấn: phản hồi 3h, buổi trong ngày hoặc hôm sau. Rà soát cơ bản: 48h. Rà soát khẩn: 4–6h. Soạn HĐ từ đầu: 3–5 ngày. Thành lập DN: 7–10 ngày. Nhãn hiệu: ~12 tháng theo Cục SHTT." data-en="Consultation: response in 3h, session same day or next day. Basic contract review: 48h. Urgent review: 4–6h. Contract drafting from scratch: 3–5 business days. Business incorporation: 7–10 days. Trademark registration: approximately 12 months (per NOIP processing time).">Tư vấn: phản hồi 3h, buổi trong ngày hoặc hôm sau. Rà soát cơ bản: 48h. Rà soát khẩn: 4–6h. Soạn HĐ từ đầu: 3–5 ngày. Thành lập DN: 7–10 ngày. Nhãn hiệu: ~12 tháng theo Cục SHTT.</div>
       </div>
     </div>
   </div>
@@ -714,9 +1043,9 @@ nav ul a:hover { color: var(--green); }
       Buổi tư vấn đầu tiên 30 phút — hoàn toàn miễn phí, không ràng buộc, không phí ẩn. Online hoặc gặp trực tiếp tại Hà Nội.
     </p>
     <div class="cta-btns reveal reveal-d3">
-      <a href="tel:+84901234567" class="btn-primary">📞 0901 234 567</a>
+      <a href="tel:+84865366368" class="btn-primary">📞 0865 366 368</a>
       <a href="mailto:hello@legalwave.vn" class="btn-gold">✉️ hello@legalwave.vn</a>
-      <a href="tel:+84901234568" class="btn-outline">⚖️ Civil: 0901 234 568</a>
+      <a href="tel:+84865366369" class="btn-outline" data-vi="⚖️ Civil: 0865 366 369" data-en="⚖️ Civil: 0865 366 369">⚖️ Civil: 0865 366 369</a>
     </div>
     <p class="cta-note reveal" data-vi="Zalo · Facebook · Email — phản hồi trong 3 giờ làm việc · T2–T6 8:00–18:00" data-en="Zalo · Facebook · Email — response within 3 working hours · Mon–Fri 8:00–18:00">
       Zalo · Facebook · Email — phản hồi trong 3 giờ làm việc · T2–T6 8:00–18:00
@@ -726,24 +1055,24 @@ nav ul a:hover { color: var(--green); }
 
 <!-- FOOTER MINI -->
 <footer class="footer-mini">
-  <a href="civil.html" class="footer-logo">Legal<span>Wave</span><em>Services</em></a>
-  <div class="footer-links">
+  <a href="index.html" class="footer-logo" aria-label="LegalWave">Legal<span>Wave</span><em>Services</em></a>
+  <nav class="footer-links" aria-label="Footer links">
     <a href="index.html" data-vi="← Business" data-en="← Business">← Business</a>
     <a href="civil.html" data-vi="Civil Law" data-en="Civil Law">Civil Law</a>
     <a href="#consultation" data-vi="Tư vấn" data-en="Consultation">Tư vấn</a>
     <a href="#contracts" data-vi="Hợp đồng" data-en="Contracts">Hợp đồng</a>
-    <a href="#startup" data-vi="Startup" data-en="Startup">Startup</a>
+    <a href="#startup">Startup</a>
     <a href="#packages" data-vi="Bảng giá" data-en="Pricing">Bảng giá</a>
-  </div>
+  </nav>
   <div class="footer-copy" data-vi="© 2031 LegalWave · Giấy phép 2028/HN" data-en="© 2031 LegalWave · License 2028/HN">© 2031 LegalWave · Giấy phép 2028/HN</div>
 </footer>
 
 <script>
 (function() {
   'use strict';
-
-  // Theme
   const html = document.documentElement;
+
+  // ===== THEME =====
   const themeToggle = document.getElementById('themeToggle');
   html.setAttribute('data-theme', localStorage.getItem('lw-theme') || 'dark');
   themeToggle.addEventListener('click', () => {
@@ -752,36 +1081,49 @@ nav ul a:hover { color: var(--green); }
     localStorage.setItem('lw-theme', next);
   });
 
-  // Language
+  // ===== LANGUAGE =====
   const btnVI = document.getElementById('btnVI');
   const btnEN = document.getElementById('btnEN');
   let currentLang = localStorage.getItem('lw-lang') || 'vi';
-
   function applyLang(lang) {
     currentLang = lang;
     localStorage.setItem('lw-lang', lang);
     btnVI.classList.toggle('active', lang === 'vi');
     btnEN.classList.toggle('active', lang === 'en');
+    btnVI.setAttribute('aria-pressed', lang === 'vi');
+    btnEN.setAttribute('aria-pressed', lang === 'en');
     html.setAttribute('lang', lang);
     document.querySelectorAll('[data-vi][data-en]').forEach(el => {
       const text = el.getAttribute('data-' + lang);
       if (text) el.innerHTML = text;
     });
   }
-
   btnVI.addEventListener('click', () => applyLang('vi'));
   btnEN.addEventListener('click', () => applyLang('en'));
   applyLang(currentLang);
 
-  // Mobile menu
+  // ===== MOBILE MENU =====
   const menuBtn = document.getElementById('menuBtn');
   const mobileNav = document.getElementById('mobileNav');
   const mobileClose = document.getElementById('mobileClose');
-  menuBtn.addEventListener('click', () => mobileNav.classList.add('open'));
-  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+  function openMenu() {
+    mobileNav.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  menuBtn.addEventListener('click', openMenu);
+  mobileClose.addEventListener('click', closeMenu);
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMenu();
+  });
 
-  // Reveal
+  // ===== REVEAL =====
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
@@ -789,29 +1131,46 @@ nav ul a:hover { color: var(--green); }
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // FAQ accordion
+  // ===== FAQ ACCORDION =====
   document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
+    const q = item.querySelector('.faq-q');
+    const toggle = () => {
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+      }
+    };
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
   });
 
-  // Sticky tab active state on scroll
+  // ===== STICKY TAB ACTIVE STATE =====
   const sectionIds = ['consultation', 'contracts', 'startup', 'civil', 'packages', 'faq'];
   const tabLinks = document.querySelectorAll('.tab-item');
+  let ticking = false;
 
   window.addEventListener('scroll', () => {
-    let current = sectionIds[0];
-    sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el && window.scrollY >= el.offsetTop - 140) current = id;
-    });
-    tabLinks.forEach(tab => {
-      tab.classList.toggle('active', tab.getAttribute('href') === '#' + current);
-    });
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        let current = sectionIds[0];
+        sectionIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el && window.scrollY >= el.offsetTop - 140) current = id;
+        });
+        tabLinks.forEach(tab => {
+          tab.classList.toggle('active', tab.getAttribute('href') === '#' + current);
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
   }, { passive: true });
+
 })();
 </script>
 </body>
