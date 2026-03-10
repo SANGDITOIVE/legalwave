@@ -397,22 +397,26 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollAnim 2s ease-in-out infinite; }
 
 /* ===== MARQUEE BAND ===== */
-.marquee-band { background: var(--gold); padding: 12px 0; overflow: hidden; position: relative; }
-.marquee-track {
-  display: flex; gap: 0;
-  animation: marquee 28s linear infinite;
-  width: max-content;
-}
-/* Pause marquee for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
-.marquee-item {
-  display: flex; align-items: center; gap: 32px; padding: 0 32px;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--bg); white-space: nowrap;
-}
-.marquee-sep { width: 4px; height: 4px; background: rgba(10,22,40,0.4); border-radius: 50%; }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><span data-vi="Tư vấn miễn phí lần đầu" data-en="Free first consultation">Tư vấn miễn phí lần đầu</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Thành lập doanh nghiệp" data-en="Business incorporation">Thành lập doanh nghiệp</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Soạn thảo hợp đồng" data-en="Contract drafting">Soạn thảo hợp đồng</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Pháp lý dân sự" data-en="Civil law">Pháp lý dân sự</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Giải quyết tranh chấp" data-en="Dispute resolution">Giải quyết tranh chấp</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Pháp lý startup" data-en="Startup legal">Pháp lý startup</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Phản hồi trong 3 giờ" data-en="Response within 3 hours">Phản hồi trong 3 giờ</span><span class="marquee-sep"></span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item"><span data-vi="Tư vấn miễn phí lần đầu" data-en="Free first consultation">Tư vấn miễn phí lần đầu</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Thành lập doanh nghiệp" data-en="Business incorporation">Thành lập doanh nghiệp</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Soạn thảo hợp đồng" data-en="Contract drafting">Soạn thảo hợp đồng</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Pháp lý dân sự" data-en="Civil law">Pháp lý dân sự</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Giải quyết tranh chấp" data-en="Dispute resolution">Giải quyết tranh chấp</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Pháp lý startup" data-en="Startup legal">Pháp lý startup</span><span class="marquee-sep"></span></div>
+    <div class="marquee-item"><span data-vi="Phản hồi trong 3 giờ" data-en="Response within 3 hours">Phản hồi trong 3 giờ</span><span class="marquee-sep"></span></div>
+  </div>
+</div>
+  
 /* ===== PRACTICE AREAS ===== */
 .areas { padding: var(--section-py) var(--section-px); max-width: 1260px; margin: 0 auto; }
 .areas-header { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 64px; }
