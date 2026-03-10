@@ -2,12 +2,13 @@
 <html lang="vi" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="LegalWave Civil — Tư vấn pháp lý dân sự chuyên sâu: tranh chấp đất đai, hôn nhân gia đình, thừa kế, hợp đồng cá nhân. Miễn phí tư vấn lần đầu.">
 <meta name="keywords" content="tư vấn pháp lý dân sự, tranh chấp đất đai, hôn nhân ly hôn, thừa kế, LegalWave Civil">
 <title>LegalWave Civil — Tư Vấn Pháp Lý Dân Sự</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 /* ===== DESIGN TOKENS ===== */
@@ -24,6 +25,17 @@
   --radius-md: 6px;
   --radius-pill: 100px;
   --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+  /* Spacing scale */
+  --sp-xs: 8px;
+  --sp-sm: 16px;
+  --sp-md: 24px;
+  --sp-lg: 40px;
+  --sp-xl: 56px;
+  --sp-2xl: 80px;
+  --sp-3xl: 112px;
+  /* Section padding shorthand */
+  --section-px: clamp(24px, 5vw, 56px);
+  --section-py: clamp(64px, 8vw, 112px);
 }
 [data-theme="dark"] {
   --bg: #0a1628; --bg2: #0d1f3c;
@@ -48,30 +60,77 @@
   --gold-dim: rgba(158,120,40,0.1); --gold-border: rgba(158,120,40,0.22);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text);
-  overflow-x: hidden; transition: background var(--transition), color var(--transition); line-height: 1.6;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+  line-height: 1.6;
+  /* Safe area support for notched phones */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 body::before {
-  content: ''; position: fixed; inset: 0;
+  content: '';
+  position: fixed;
+  inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9999; opacity: 0.3;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
 }
-/* ===== TYPOGRAPHY — Playfair Display (hỗ trợ tiếng Việt) ===== */
+
+/* ===== TYPOGRAPHY ===== */
 h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--heading); font-weight: 400; line-height: 1.15; }
-h1 { font-size: clamp(42px, 5.2vw, 76px); }
-h2 { font-size: clamp(28px, 3.8vw, 50px); }
-h3 { font-size: clamp(18px, 2.2vw, 26px); }
+h1 { font-size: clamp(36px, 6vw, 76px); }
+h2 { font-size: clamp(26px, 4vw, 50px); }
+h3 { font-size: clamp(17px, 2.2vw, 26px); }
 em { font-style: italic; color: var(--green); }
 a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; }
 
 /* ===== BUTTONS ===== */
-.btn-primary { display: inline-block; background: var(--green); color: #fff; border: none; padding: 13px 30px; font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); cursor: pointer; transition: all var(--transition); }
+/* Minimum 44px touch target on mobile */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--green); color: #fff; border: none;
+  padding: 14px 30px; min-height: 44px;
+  font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: var(--shadow-green); }
-.btn-outline { display: inline-block; background: transparent; color: var(--text); border: 1px solid var(--border); padding: 13px 30px; font-size: 11.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); transition: all var(--transition); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--text); border: 1px solid var(--border);
+  padding: 14px 30px; min-height: 44px;
+  font-size: 11.5px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 .btn-outline:hover { border-color: var(--green-border); color: var(--green); }
-.btn-gold { display: inline-block; background: var(--gold); color: var(--bg); padding: 13px 30px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: var(--radius-sm); transition: all var(--transition); }
+
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: var(--bg);
+  padding: 14px 30px; min-height: 44px;
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
 
 /* ===== SECTION LABELS ===== */
@@ -87,43 +146,117 @@ a { text-decoration: none; color: inherit; }
 .reveal-delay-2 { transition-delay: 0.22s; }
 .reveal-delay-3 { transition-delay: 0.33s; }
 .reveal-delay-4 { transition-delay: 0.44s; }
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-delay-1, .reveal-delay-2, .reveal-delay-3, .reveal-delay-4 {
+    opacity: 1; transform: none; transition: none;
+  }
+  .hero-badge, .hero-eyebrow, .hero-title, .hero-desc, .hero-btns, .hero-trust, .hero-card, .hero-scroll {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @keyframes fadeLeft { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
 @keyframes pulse { 0%,100% { box-shadow: 0 0 6px rgba(107,168,136,0.9); } 50% { box-shadow: 0 0 16px rgba(107,168,136,1); } }
 @keyframes scrollAnim { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
 /* ===== NAVIGATION ===== */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 0 56px; height: 68px; display: flex; align-items: center; justify-content: space-between; background: transparent; border-bottom: 1px solid transparent; transition: background var(--transition), border-color var(--transition); }
-nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-filter: blur(20px); }
-.nav-brand { display: flex; align-items: center; gap: 14px; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 0 var(--sp-xl); height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: transparent; border-bottom: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition);
+  /* Safe area */
+  padding-left: max(var(--sp-xl), env(safe-area-inset-left));
+  padding-right: max(var(--sp-xl), env(safe-area-inset-right));
+}
+nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.nav-brand { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .logo-parent { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); transition: color var(--transition); font-weight: 500; }
 .logo-parent:hover { color: var(--gold); }
 .nav-divider { width: 1px; height: 18px; background: var(--border); }
 .logo { display: flex; align-items: center; gap: 6px; }
 .logo-sub { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); font-family: 'DM Sans', sans-serif; font-weight: 600; }
 .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
-.nav-links a { font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); transition: color var(--transition); font-weight: 500; }
+.nav-links a {
+  font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+  transition: color var(--transition); font-weight: 500;
+  padding: 4px 0; /* larger tap area */
+}
 .nav-links a:hover { color: var(--green); }
 .nav-right { display: flex; align-items: center; gap: 14px; }
 .lang-toggle { display: flex; align-items: center; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-pill); overflow: hidden; }
-.lang-btn { padding: 5px 12px; cursor: pointer; transition: all var(--transition); color: var(--text-muted); background: transparent; border: none; font-family: 'DM Sans', sans-serif; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; }
+.lang-btn {
+  padding: 6px 12px; min-height: 32px; min-width: 36px;
+  cursor: pointer; transition: all var(--transition); color: var(--text-muted);
+  background: transparent; border: none; font-family: 'DM Sans', sans-serif;
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .lang-btn.active { background: var(--green); color: #fff; }
-.nav-back { font-size: 11px; letter-spacing: 0.07em; color: var(--text-muted); border: 1px solid var(--border); padding: 6px 16px; border-radius: var(--radius-pill); transition: all var(--transition); font-weight: 500; white-space: nowrap; }
+.nav-back {
+  font-size: 11px; letter-spacing: 0.07em; color: var(--text-muted);
+  border: 1px solid var(--border); padding: 6px 16px; min-height: 32px;
+  border-radius: var(--radius-pill); transition: all var(--transition); font-weight: 500; white-space: nowrap;
+  display: inline-flex; align-items: center;
+}
 .nav-back:hover { border-color: var(--gold-border); color: var(--gold); }
-.theme-toggle { width: 42px; height: 23px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-pill); cursor: pointer; position: relative; transition: all var(--transition); flex-shrink: 0; }
+.theme-toggle {
+  width: 42px; height: 23px; min-width: 42px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius-pill); cursor: pointer;
+  position: relative; transition: all var(--transition); flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 .theme-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 15px; height: 15px; background: var(--green); border-radius: 50%; transition: transform var(--transition); }
 [data-theme="light"] .theme-toggle::after { transform: translateX(19px); }
-.menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+
+/* Hamburger */
+.menu-btn {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  padding: 8px; background: none; border: none;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  min-width: 44px; min-height: 44px; align-items: center; justify-content: center;
+}
 .menu-btn span { display: block; width: 22px; height: 1.5px; background: var(--text); border-radius: 2px; transition: all var(--transition); }
-.mobile-nav { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 450; flex-direction: column; justify-content: center; align-items: center; gap: 28px; }
-.mobile-nav.open { display: flex; }
-.mobile-nav a { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 400; color: var(--heading); transition: color var(--transition); }
+
+/* Mobile Nav */
+.mobile-nav {
+  display: none; position: fixed; inset: 0; background: var(--bg);
+  z-index: 450; flex-direction: column; justify-content: center;
+  align-items: center; gap: 28px;
+  /* Animate in */
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.mobile-nav.open { display: flex; opacity: 1; }
+.mobile-nav a {
+  font-family: 'Playfair Display', serif; font-size: clamp(22px, 5vw, 32px);
+  font-weight: 400; color: var(--heading); transition: color var(--transition);
+  padding: 8px 24px; min-height: 44px; display: flex; align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
 .mobile-nav a:hover { color: var(--green); }
-.mobile-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; transition: color var(--transition); }
+.mobile-close {
+  position: absolute; top: 20px; right: 20px;
+  background: none; border: none; font-size: 22px; color: var(--text-muted);
+  cursor: pointer; transition: color var(--transition);
+  min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; -webkit-tap-highlight-color: transparent;
+}
 .mobile-close:hover { color: var(--green); }
 
 /* ===== FACEBOOK BANNER ===== */
-.fb-banner-lw { position: relative; background: linear-gradient(135deg, #0d1f3c 0%, #0a1628 60%, #0d2a1a 100%); border: 1px solid rgba(107,168,136,0.3); border-radius: 12px; padding: 18px 24px 18px 20px; display: flex; align-items: center; gap: 16px; max-width: 540px; width: 100%; overflow: hidden; cursor: pointer; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.fb-banner-lw {
+  position: relative;
+  background: linear-gradient(135deg, #0d1f3c 0%, #0a1628 60%, #0d2a1a 100%);
+  border: 1px solid rgba(107,168,136,0.3); border-radius: 12px;
+  padding: 18px 24px 18px 20px; display: flex; align-items: center; gap: 16px;
+  max-width: 540px; width: 100%; overflow: hidden; cursor: pointer;
+  text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
 [data-theme="light"] .fb-banner-lw { background: linear-gradient(135deg, #edf5f0 0%, #f6f3ec 60%, #e8f0ea 100%); border-color: rgba(61,122,95,0.3); }
 .fb-banner-lw:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(107,168,136,0.2); }
 .fb-banner-lw::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(107,168,136,0.08) 0%, transparent 70%); animation: fb-glowPulse 3s ease-in-out infinite; }
@@ -147,33 +280,43 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 @keyframes fb-ringPulse { 0%{transform:scale(.85);opacity:0;} 50%{opacity:1;} 100%{transform:scale(1.1);opacity:0;} }
 .fb-free-badge { position:absolute; top:-8px; right:-10px; background: linear-gradient(135deg,#6ba888,#3d7a5f); color:#fff; font-size:8px; font-weight:700; letter-spacing:.1em; padding:3px 7px; border-radius:100px; text-transform:uppercase; box-shadow: 0 2px 8px rgba(107,168,136,0.5); animation: fb-badgePop 1s cubic-bezier(.34,1.56,.64,1) forwards; }
 @keyframes fb-badgePop { 0%{transform:scale(0);opacity:0} 100%{transform:scale(1);opacity:1} }
-.fb-body { flex:1; position:relative; z-index:1; }
+.fb-body { flex:1; position:relative; z-index:1; min-width: 0; /* prevent flex overflow */ }
 .fb-tag { font-family:'DM Sans',sans-serif; font-size:9.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6ba888; display:flex; align-items:center; gap:6px; margin-bottom:5px; }
 [data-theme="light"] .fb-tag { color:#3d7a5f; }
-.fb-dot { width:5px; height:5px; background:#6ba888; border-radius:50%; animation: fb-dotPulse 1.5s ease-in-out infinite; }
+.fb-dot { width:5px; height:5px; background:#6ba888; border-radius:50%; flex-shrink:0; animation: fb-dotPulse 1.5s ease-in-out infinite; }
 @keyframes fb-dotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(107,168,136,0.6);} 50%{box-shadow:0 0 0 4px rgba(107,168,136,0);} }
 .fb-title { font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; color:#ffffff; line-height:1.3; margin-bottom:5px; letter-spacing:-.01em; }
 [data-theme="light"] .fb-title { color:#0d0a02; }
 .fb-title em { color:#6ba888; font-style:normal; }
 [data-theme="light"] .fb-title em { color:#3d7a5f; }
-.fb-sub { font-family:'DM Sans',sans-serif; font-size:11.5px; color:rgba(240,235,224,0.55); }
+.fb-sub { font-family:'DM Sans',sans-serif; font-size:11.5px; color:rgba(240,235,224,0.55); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 [data-theme="light"] .fb-sub { color:rgba(26,18,5,0.5); }
 .fb-cta { flex-shrink:0; width:36px; height:36px; background:rgba(107,168,136,0.15); border:1px solid rgba(107,168,136,0.35); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#6ba888; font-size:15px; transition:all 0.3s ease; animation: fb-arrowBounce 2s ease-in-out infinite; position:relative; z-index:1; }
 .fb-banner-lw:hover .fb-cta { background:#6ba888; color:#fff; }
 @keyframes fb-arrowBounce { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
-@media(max-width:680px){ .fb-banner-lw { margin: 0 24px; max-width:100%; } }
+
+/* FB banner container */
+.fb-banner-wrap {
+  display: flex; justify-content: center;
+  padding: 90px var(--section-px) 0;
+  position: relative; z-index: 10;
+}
 
 /* ===== HERO ===== */
-.hero { min-height: 100vh; display: grid; grid-template-columns: 55% 45%; position: relative; overflow: hidden; }
+.hero {
+  min-height: 100vh; min-height: 100dvh; /* dynamic viewport height */
+  display: grid; grid-template-columns: 55% 45%;
+  position: relative; overflow: hidden;
+}
 .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 65% 45%, rgba(107,168,136,0.07) 0%, transparent 60%), linear-gradient(145deg, var(--bg) 0%, var(--bg2) 100%); transition: background var(--transition); }
-.hero-watermark { position: absolute; right: -30px; top: 50%; transform: translateY(-50%); font-family: 'Playfair Display', serif; font-size: clamp(140px, 16vw, 230px); font-style: italic; font-weight: 400; color: transparent; -webkit-text-stroke: 1px rgba(107,168,136,0.07); line-height: 1; pointer-events: none; white-space: nowrap; user-select: none; }
+.hero-watermark { position: absolute; right: -30px; top: 50%; transform: translateY(-50%); font-family: 'Playfair Display', serif; font-size: clamp(120px, 16vw, 230px); font-style: italic; font-weight: 400; color: transparent; -webkit-text-stroke: 1px rgba(107,168,136,0.07); line-height: 1; pointer-events: none; white-space: nowrap; user-select: none; }
 [data-theme="light"] .hero-watermark { -webkit-text-stroke: 1px rgba(61,122,95,0.06); }
 .hero-lines { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; overflow: hidden; opacity: 0.03; }
 .hero-lines::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, var(--green) 0, var(--green) 1px, transparent 1px, transparent 38px); }
-.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 140px 56px 80px; position: relative; z-index: 2; }
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 120px var(--sp-xl) 80px; position: relative; z-index: 2; }
 .hero-right { display: flex; align-items: center; justify-content: flex-end; padding: 140px 48px 80px 24px; position: relative; z-index: 2; }
 .hero-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--green-dim); border: 1px solid var(--green-border); padding: 7px 18px; border-radius: var(--radius-pill); margin-bottom: 28px; font-size: 11px; color: var(--green); font-weight: 500; letter-spacing: 0.05em; opacity: 0; animation: fadeUp 0.7s 0s forwards; width: fit-content; }
-.badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+.badge-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite; }
 .hero-eyebrow { font-size: 10.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; opacity: 0; animation: fadeUp 0.7s 0.12s forwards; font-weight: 500; }
 .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--green); }
 .hero-title { margin-bottom: 22px; opacity: 0; animation: fadeUp 0.7s 0.24s forwards; }
@@ -184,7 +327,7 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .trust-stat { text-align: center; }
 .trust-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 400; color: var(--green); line-height: 1; display: block; }
 .trust-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 3px; display: block; }
-.hero-card { background: var(--bg3); border: 1px solid var(--green-border); backdrop-filter: blur(24px); border-radius: var(--radius-md); padding: 32px; width: 100%; max-width: 330px; opacity: 0; animation: fadeLeft 0.7s 0.88s forwards; }
+.hero-card { background: var(--bg3); border: 1px solid var(--green-border); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: var(--radius-md); padding: 32px; width: 100%; max-width: 330px; opacity: 0; animation: fadeLeft 0.7s 0.88s forwards; }
 .card-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--green-border); font-weight: 500; }
 .card-list { display: flex; flex-direction: column; }
 .card-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; color: var(--text); transition: color var(--transition); cursor: default; }
@@ -194,21 +337,27 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .cli-name { flex: 1; }
 .cli-arrow { font-size: 11px; color: var(--text-muted); transition: all var(--transition); }
 .card-list-item:hover .cli-arrow { color: var(--green); transform: translateX(3px); }
-.hero-scroll { position: absolute; bottom: 32px; left: 56px; display: flex; align-items: center; gap: 12px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); z-index: 2; opacity: 0; animation: fadeUp 0.7s 1.1s forwards; }
+.hero-scroll { position: absolute; bottom: 32px; left: var(--sp-xl); display: flex; align-items: center; gap: 12px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); z-index: 2; opacity: 0; animation: fadeUp 0.7s 1.1s forwards; }
 .scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom, var(--green), transparent); animation: scrollAnim 2s ease-in-out infinite; }
 
 /* ===== PARENT BANNER ===== */
-.parent-banner { background: linear-gradient(135deg, var(--gold-dim) 0%, var(--bg3) 100%); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 18px 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; transition: background var(--transition); }
+.parent-banner {
+  background: linear-gradient(135deg, var(--gold-dim) 0%, var(--bg3) 100%);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 18px var(--section-px);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  transition: background var(--transition);
+}
 .parent-info { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .parent-text { font-size: 13px; color: var(--text-muted); }
 .parent-brand { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; color: var(--heading); }
 .parent-brand span { color: var(--gold); }
 .parent-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gold-dim); color: var(--gold); padding: 3px 10px; border-radius: var(--radius-pill); font-weight: 500; }
-.parent-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border); padding: 7px 18px; border-radius: var(--radius-sm); transition: all var(--transition); font-weight: 500; white-space: nowrap; }
+.parent-link { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border); padding: 7px 18px; min-height: 36px; border-radius: var(--radius-sm); transition: all var(--transition); font-weight: 500; white-space: nowrap; display: inline-flex; align-items: center; }
 .parent-link:hover { background: var(--gold); color: var(--bg); }
 
 /* ===== OVERVIEW ===== */
-.overview { padding: 112px 56px; max-width: 1260px; margin: 0 auto; }
+.overview { padding: var(--section-py) var(--section-px); max-width: 1260px; margin: 0 auto; }
 .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
 .overview-body { font-size: 14.5px; line-height: 1.9; color: var(--text-dim); font-weight: 300; margin-bottom: 32px; }
 .overview-list { display: flex; flex-direction: column; gap: 14px; }
@@ -227,7 +376,7 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .tl-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
 /* ===== PROBLEMS ===== */
-.problems { background: var(--bg2); padding: 112px 56px; position: relative; overflow: hidden; transition: background var(--transition); }
+.problems { background: var(--bg2); padding: var(--section-py) var(--section-px); position: relative; overflow: hidden; transition: background var(--transition); }
 .problems::before, .problems::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--green-border), transparent); }
 .problems::before { top: 0; } .problems::after { bottom: 0; }
 .problems-inner { max-width: 1260px; margin: 0 auto; }
@@ -245,7 +394,7 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .ptag { font-size: 10px; letter-spacing: 0.08em; background: var(--green-dim); color: var(--green); padding: 4px 10px; border-radius: var(--radius-pill); font-weight: 500; }
 
 /* ===== HOW ===== */
-.how-section { padding: 112px 56px; max-width: 1260px; margin: 0 auto; }
+.how-section { padding: var(--section-py) var(--section-px); max-width: 1260px; margin: 0 auto; }
 .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
 .how-steps { display: flex; flex-direction: column; gap: 0; }
 .how-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); transition: all var(--transition); cursor: default; }
@@ -263,7 +412,7 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .how-card-note { font-size: 11.5px; color: var(--text-muted); line-height: 1.7; border-top: 1px solid var(--border); padding-top: 18px; }
 
 /* ===== TESTIMONIALS ===== */
-.testimonials { background: var(--bg2); padding: 112px 56px; position: relative; transition: background var(--transition); }
+.testimonials { background: var(--bg2); padding: var(--section-py) var(--section-px); position: relative; transition: background var(--transition); }
 .testimonials::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(to right, transparent, var(--green-border), transparent); }
 .test-inner { max-width: 1260px; margin: 0 auto; }
 .test-header { text-align: center; margin-bottom: 64px; }
@@ -280,12 +429,20 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .test-role { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
 /* ===== FAQ ===== */
-.faq-section { padding: 112px 56px; max-width: 1260px; margin: 0 auto; }
+.faq-section { padding: var(--section-py) var(--section-px); max-width: 1260px; margin: 0 auto; }
 .faq-inner { display: grid; grid-template-columns: 1fr 1.6fr; gap: 72px; align-items: start; margin-top: 12px; }
 .faq-side-title { font-size: 15px; color: var(--text-muted); line-height: 1.8; font-weight: 300; margin-top: 14px; }
 .faq-list { display: flex; flex-direction: column; gap: 0; }
 .faq-item { border-bottom: 1px solid var(--border); }
-.faq-q { padding: 20px 0; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 14.5px; font-weight: 500; color: var(--heading); transition: color var(--transition); }
+.faq-q {
+  padding: 20px 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: 14.5px; font-weight: 500; color: var(--heading);
+  transition: color var(--transition);
+  min-height: 44px; /* touch target */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
 .faq-q:hover { color: var(--green); }
 .faq-icon { width: 28px; height: 28px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--text-muted); transition: all var(--transition); }
 .faq-item.open .faq-icon { border-color: var(--green); color: var(--green); transform: rotate(45deg); }
@@ -293,9 +450,9 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
 
 /* ===== CTA ===== */
-.cta-section { padding: 120px 56px; position: relative; overflow: hidden; }
+.cta-section { padding: clamp(80px, 10vw, 120px) var(--section-px); position: relative; overflow: hidden; }
 .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(107,168,136,0.06) 0%, transparent 70%); }
-.cta-watermark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: 'Playfair Display', serif; font-size: clamp(80px, 12vw, 160px); font-style: italic; font-weight: 400; color: transparent; -webkit-text-stroke: 1px rgba(107,168,136,0.05); pointer-events: none; user-select: none; white-space: nowrap; }
+.cta-watermark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: 'Playfair Display', serif; font-size: clamp(60px, 12vw, 160px); font-style: italic; font-weight: 400; color: transparent; -webkit-text-stroke: 1px rgba(107,168,136,0.05); pointer-events: none; user-select: none; white-space: nowrap; }
 .cta-inner { max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
 .cta-inner h2 { margin-bottom: 18px; margin-top: 12px; }
 .cta-desc { font-size: 15px; color: var(--text-dim); line-height: 1.85; margin-bottom: 40px; font-weight: 300; }
@@ -304,65 +461,185 @@ nav.scrolled { background: var(--nav-bg); border-color: var(--border); backdrop-
 
 /* ===== FOOTER ===== */
 footer { border-top: 1px solid var(--border); background: var(--bg2); transition: background var(--transition); }
-.footer-top { max-width: 1260px; margin: 0 auto; padding: 72px 56px 56px; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; }
+.footer-top { max-width: 1260px; margin: 0 auto; padding: 72px var(--section-px) 56px; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; }
 .footer-logo-wrap { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
 .footer-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; color: var(--heading); display: block; }
 .footer-logo span { color: var(--gold); }
 .footer-logo-sub { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); font-weight: 600; }
 .footer-tagline { font-size: 13px; color: var(--text-muted); line-height: 1.8; margin-bottom: 24px; }
 .footer-social { display: flex; gap: 8px; }
-.social-btn { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-muted); transition: all var(--transition); font-weight: 500; }
+.social-btn { width: 40px; height: 40px; border: 1px solid var(--border); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-muted); transition: all var(--transition); font-weight: 500; -webkit-tap-highlight-color: transparent; }
 .social-btn:hover { border-color: var(--green-border); color: var(--green); }
 .footer-col h4 { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--heading); margin-bottom: 18px; }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.footer-col ul a { font-size: 13px; color: var(--text-muted); transition: color var(--transition); }
+.footer-col ul a { font-size: 13px; color: var(--text-muted); transition: color var(--transition); padding: 2px 0; display: inline-block; }
 .footer-col ul a:hover { color: var(--green); }
-.footer-biz-bar { border-top: 1px solid var(--border); margin: 0 56px; padding: 20px 0; display: flex; align-items: center; justify-content: space-between; }
+.footer-biz-bar { border-top: 1px solid var(--border); margin: 0 var(--section-px); padding: 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .footer-biz-text { font-size: 13px; color: var(--text-muted); }
 .footer-biz-text strong { color: var(--gold); }
-.footer-biz-btn { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border); padding: 7px 18px; border-radius: var(--radius-pill); transition: all var(--transition); font-weight: 500; }
+.footer-biz-btn { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-border); padding: 7px 18px; min-height: 36px; border-radius: var(--radius-pill); transition: all var(--transition); font-weight: 500; display: inline-flex; align-items: center; -webkit-tap-highlight-color: transparent; }
 .footer-biz-btn:hover { background: var(--gold); color: var(--bg); }
-.footer-bottom { border-top: 1px solid var(--border); padding: 20px 56px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--text-muted); gap: 20px; flex-wrap: wrap; }
-.footer-bottom a { color: var(--text-muted); transition: color var(--transition); }
+.footer-bottom { border-top: 1px solid var(--border); padding: 20px var(--section-px); display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--text-muted); gap: 16px; flex-wrap: wrap; }
+.footer-bottom a { color: var(--text-muted); transition: color var(--transition); padding: 2px 0; }
 .footer-bottom a:hover { color: var(--green); }
 
-/* ===== RESPONSIVE ===== */
+/* ===================================================================
+   RESPONSIVE BREAKPOINTS
+   Strategy: Desktop-first refinement approach since base is desktop
+   =================================================================== */
+
+/* ===== TABLET: 1100px ===== */
 @media (max-width: 1100px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 120px 40px 60px; }
-  .hero-right { display: none; }
+  /* Nav */
   nav { padding: 0 40px; }
   .nav-links { display: none; }
   .menu-btn { display: flex; }
-  .overview-grid, .how-grid { grid-template-columns: 1fr; }
+  .nav-back { display: none; } /* save space on tablet */
+
+  /* Hero: single column */
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 120px 40px 60px; }
+  .hero-right { display: none; }
+  .hero-scroll { left: 40px; }
+
+  /* Layout grids */
+  .overview-grid,
+  .how-grid { grid-template-columns: 1fr; gap: 48px; }
+
+  /* How card: no sticky on mobile */
+  .how-card { position: static; }
+
+  /* Sections */
   .overview, .how-section, .faq-section { padding: 80px 40px; }
   .problems { padding: 80px 40px; }
-  .problems-grid, .test-grid { grid-template-columns: 1fr 1fr; }
   .testimonials { padding: 80px 40px; }
   .cta-section { padding: 80px 40px; }
-  .footer-top { grid-template-columns: 1fr 1fr; padding: 56px 40px; }
-  .footer-bottom, .footer-biz-bar { margin: 0 40px; padding: 18px 0; }
+
+  /* Grids: 2 columns on tablet */
+  .problems-grid,
+  .test-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Footer */
+  .footer-top { grid-template-columns: 1fr 1fr; padding: 56px 40px; gap: 36px; }
+  .footer-bottom,
+  .footer-biz-bar { margin: 0 40px; padding: 18px 0; }
+
+  /* Misc */
   .parent-banner { padding: 18px 40px; }
   .faq-inner { grid-template-columns: 1fr; gap: 40px; }
 }
+
+/* ===== MOBILE: 680px ===== */
 @media (max-width: 680px) {
-  nav { padding: 0 24px; }
-  .hero-left { padding: 100px 24px 56px; }
-  .hero-scroll { left: 24px; }
-  .overview, .how-section, .problems, .faq-section, .cta-section, .testimonials { padding: 64px 24px; }
-  .problems-grid, .test-grid { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr; padding: 40px 24px; }
-  .footer-bottom, .footer-biz-bar { margin: 0 24px; flex-direction: column; gap: 12px; text-align: center; }
-  .parent-banner { padding: 16px 24px; flex-direction: column; align-items: flex-start; }
+  /* Nav */
+  nav { padding: 0 20px; height: 60px; }
+
+  /* FB banner */
+  .fb-banner-wrap { padding: 74px 20px 0; }
+  .fb-banner-lw { max-width: 100%; }
+  .fb-sub { display: none; } /* avoid overflow on small screens */
+
+  /* Hero */
+  .hero-left { padding: 88px 20px 48px; }
+  .hero-scroll { left: 20px; display: none; } /* hide on small phones */
+  .hero-desc { font-size: 14px; }
+  .hero-btns { gap: 10px; }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-outline { width: 100%; justify-content: center; } /* full-width buttons */
+  .hero-trust { gap: 16px; justify-content: center; }
   .hero-trust .trust-divider { display: none; }
+
+  /* Sections: compact padding */
+  .overview,
+  .how-section,
+  .problems,
+  .faq-section,
+  .cta-section,
+  .testimonials { padding: 56px 20px; }
+
+  /* Single column cards */
+  .problems-grid,
+  .test-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Problem card: tighter on mobile */
+  .problem-card { padding: 24px 20px; }
+  .test-card { padding: 24px 20px; }
+
+  /* How steps: smaller padding */
+  .how-step { padding: 18px 0; }
+  .step-num { font-size: 26px; width: 36px; }
+
+  /* FAQ: tighter */
+  .faq-q { font-size: 13.5px; }
+
+  /* CTA buttons: full-width stack on small */
+  .cta-btns { flex-direction: column; align-items: center; }
+  .cta-btns .btn-primary,
+  .cta-btns .btn-outline { width: 100%; max-width: 320px; }
+
+  /* Footer */
+  .footer-top { grid-template-columns: 1fr; padding: 40px 20px; gap: 28px; }
+  .footer-bottom,
+  .footer-biz-bar { margin: 0 20px; flex-direction: column; gap: 12px; text-align: center; align-items: center; }
+
+  /* Parent banner */
+  .parent-banner { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .parent-info { gap: 10px; }
+  .parent-text:not(:first-child) { display: none; } /* shorten on mobile */
+
+  /* Nav back button hidden on small */
+  .nav-back { display: none; }
+
+  /* Overview body slightly smaller */
+  .overview-body { font-size: 14px; }
+
+  /* Overview grid gap */
+  .overview-grid { gap: 36px; }
+}
+
+/* ===== SMALL PHONES: 400px ===== */
+@media (max-width: 400px) {
+  h1 { font-size: 32px; }
+  h2 { font-size: 24px; }
+  .hero-badge { font-size: 10px; padding: 6px 14px; }
+  .problems-header .section-label,
+  .test-header .section-label { justify-content: flex-start; }
+  .test-header { text-align: left; }
+  .cta-inner { text-align: left; }
+  .cta-inner .section-label { justify-content: flex-start; }
+  .cta-btns { align-items: flex-start; }
+  .fb-icon { width: 44px; height: 44px; font-size: 22px; }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-width: 812px) and (orientation: landscape) {
+  .hero { min-height: auto; }
+  .hero-left { padding-top: 80px; padding-bottom: 48px; }
+  .hero-scroll { display: none; }
+}
+
+/* ===== HIGH-DENSITY SCREENS ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Crisp borders on retina */
+  .tl-line { width: 0.5px; }
+}
+
+/* ===== HOVER: Only apply hover effects on true pointer devices ===== */
+@media (hover: none) {
+  .problem-card:hover,
+  .test-card:hover { transform: none; box-shadow: none; }
+  .how-step:hover { padding-left: 0; }
+  .btn-primary:hover,
+  .btn-gold:hover { transform: none; }
+  .card-list-item:hover { color: inherit; }
 }
 </style>
 </head>
 <body>
 
 <!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose">✕</button>
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Menu điều hướng" aria-modal="true">
+  <button class="mobile-close" id="mobileClose" aria-label="Đóng menu">✕</button>
   <a href="civil.html" data-vi="Trang chủ Civil" data-en="Civil Home">Trang chủ Civil</a>
   <a href="#overview" data-vi="Tổng quan" data-en="Overview">Tổng quan</a>
   <a href="#problems" data-vi="Vấn đề pháp lý" data-en="Legal Issues">Vấn đề pháp lý</a>
@@ -372,16 +649,16 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
 </div>
 
 <!-- NAVIGATION -->
-<nav id="mainNav">
+<nav id="mainNav" role="navigation" aria-label="Điều hướng chính">
   <div class="nav-brand">
     <a href="index.html" class="logo-parent" data-vi="LegalWave Business" data-en="LegalWave Business">LegalWave Business</a>
-    <div class="nav-divider"></div>
-    <a href="civil.html" class="logo">
-      <img src="logorutgon.svg" height="35">
+    <div class="nav-divider" aria-hidden="true"></div>
+    <a href="civil.html" class="logo" aria-label="LegalWave Civil - Trang chủ">
+      <img src="logorutgon.svg" height="30" alt="LegalWave logo" loading="eager">
       <span class="logo-sub">CIVIL</span>
     </a>
   </div>
-  <ul class="nav-links">
+  <ul class="nav-links" role="list">
     <li><a href="#overview" data-vi="Tổng quan" data-en="Overview">Tổng quan</a></li>
     <li><a href="#problems" data-vi="Lĩnh vực" data-en="Areas">Lĩnh vực</a></li>
     <li><a href="#how" data-vi="Quy trình" data-en="Process">Quy trình</a></li>
@@ -389,46 +666,49 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
     <li><a href="services.html" data-vi="Dịch vụ" data-en="Services">Dịch vụ</a></li>
   </ul>
   <div class="nav-right">
-    <div class="lang-toggle" id="langToggle">
-      <button class="lang-btn active" id="btnVI">VI</button>
-      <button class="lang-btn" id="btnEN">EN</button>
+    <div class="lang-toggle" id="langToggle" role="group" aria-label="Chọn ngôn ngữ">
+      <button class="lang-btn active" id="btnVI" aria-pressed="true" aria-label="Tiếng Việt">VI</button>
+      <button class="lang-btn" id="btnEN" aria-pressed="false" aria-label="English">EN</button>
     </div>
     <a href="index.html" class="nav-back" data-vi="← Business" data-en="← Business">← Business</a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
-    <button class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" aria-label="Chuyển giao diện sáng/tối"></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Mở menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<div style="display:flex; justify-content:center; padding: 90px 70px 0; position:relative; z-index:10;">
-  <a href="https://www.facebook.com/share/g/1CAKFeRJz2/" target="_blank" rel="noopener" class="fb-banner-lw">
-    <div class="fb-particles">
+<!-- FB BANNER -->
+<div class="fb-banner-wrap">
+  <a href="https://www.facebook.com/share/g/1CAKFeRJz2/" target="_blank" rel="noopener noreferrer" class="fb-banner-lw" aria-label="Tham gia nhóm Facebook LegalWave Civil - Tư vấn pháp luật miễn phí">
+    <div class="fb-particles" aria-hidden="true">
       <div class="fb-p"></div><div class="fb-p"></div><div class="fb-p"></div>
       <div class="fb-p"></div><div class="fb-p"></div><div class="fb-p"></div>
     </div>
-    <div class="fb-shimmer"></div>
-    <div class="fb-icon-wrap">
+    <div class="fb-shimmer" aria-hidden="true"></div>
+    <div class="fb-icon-wrap" aria-hidden="true">
       <div class="fb-ring"></div>
       <div class="fb-ring2"></div>
       <div class="fb-icon">⚖️</div>
       <div class="fb-free-badge">MIỄN PHÍ</div>
     </div>
     <div class="fb-body">
-      <div class="fb-tag"><span class="fb-dot"></span>LegalWave Civil · Facebook</div>
+      <div class="fb-tag"><span class="fb-dot" aria-hidden="true"></span>LegalWave Civil · Facebook</div>
       <div class="fb-title">Hỏi đáp & Tư vấn <em>Pháp luật Miễn Phí</em></div>
       <div class="fb-sub">Đặt câu hỏi ngay — phản hồi trong 3 giờ làm việc</div>
     </div>
-    <div class="fb-cta">→</div>
+    <div class="fb-cta" aria-hidden="true">→</div>
   </a>
 </div>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="hero-watermark" aria-hidden="true">Civil</div>
-  <div class="hero-lines"></div>
+  <div class="hero-lines" aria-hidden="true"></div>
   <div class="hero-left">
     <div class="hero-badge">
-      <span class="badge-dot"></span>
+      <span class="badge-dot" aria-hidden="true"></span>
       <span data-vi="Nhánh Dân sự · LegalWave" data-en="Civil Branch · LegalWave">Nhánh Dân sự · LegalWave</span>
     </div>
     <p class="hero-eyebrow" data-vi="Pháp lý dân sự cho mọi người" data-en="Civil law for everyone">Pháp lý dân sự cho mọi người</p>
@@ -444,27 +724,27 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <a href="#contact" class="btn-primary" data-vi="Tư vấn miễn phí" data-en="Free Consultation">Tư vấn miễn phí</a>
       <a href="services.html" class="btn-outline" data-vi="Xem gói dịch vụ" data-en="View Packages">Xem gói dịch vụ</a>
     </div>
-    <div class="hero-trust">
-      <div class="trust-stat"><span class="trust-num">120+</span><span class="trust-label" data-vi="Vụ dân sự" data-en="Civil cases">Vụ dân sự</span></div>
-      <div class="trust-divider"></div>
-      <div class="trust-stat"><span class="trust-num">4</span><span class="trust-label" data-vi="Lĩnh vực" data-en="Practice areas">Lĩnh vực</span></div>
-      <div class="trust-divider"></div>
-      <div class="trust-stat"><span class="trust-num">3h</span><span class="trust-label" data-vi="Phản hồi" data-en="Response">Phản hồi</span></div>
+    <div class="hero-trust" role="list" aria-label="Thống kê">
+      <div class="trust-stat" role="listitem"><span class="trust-num">120+</span><span class="trust-label" data-vi="Vụ dân sự" data-en="Civil cases">Vụ dân sự</span></div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-stat" role="listitem"><span class="trust-num">4</span><span class="trust-label" data-vi="Lĩnh vực" data-en="Practice areas">Lĩnh vực</span></div>
+      <div class="trust-divider" aria-hidden="true"></div>
+      <div class="trust-stat" role="listitem"><span class="trust-num">3h</span><span class="trust-label" data-vi="Phản hồi" data-en="Response">Phản hồi</span></div>
     </div>
   </div>
-  <div class="hero-right">
+  <div class="hero-right" aria-hidden="true">
     <div class="hero-card">
       <div class="card-label" data-vi="Lĩnh vực Civil Law" data-en="Civil Law Areas">Lĩnh vực Civil Law</div>
       <div class="card-list">
-        <div class="card-list-item"><span class="cli-icon">🏠</span><span class="cli-name" data-vi="Tranh chấp đất đai & tài sản" data-en="Property disputes">Tranh chấp đất đai & tài sản</span><span class="cli-arrow">→</span></div>
-        <div class="card-list-item"><span class="cli-icon">💍</span><span class="cli-name" data-vi="Hôn nhân & Gia đình" data-en="Marriage & Family">Hôn nhân & Gia đình</span><span class="cli-arrow">→</span></div>
-        <div class="card-list-item"><span class="cli-icon">📜</span><span class="cli-name" data-vi="Thừa kế & Di chúc" data-en="Inheritance & Wills">Thừa kế & Di chúc</span><span class="cli-arrow">→</span></div>
-        <div class="card-list-item"><span class="cli-icon">📋</span><span class="cli-name" data-vi="Hợp đồng cá nhân" data-en="Personal contracts">Hợp đồng cá nhân</span><span class="cli-arrow">→</span></div>
-        <div class="card-list-item"><span class="cli-icon">⚖️</span><span class="cli-name" data-vi="Kiện tụng dân sự" data-en="Civil litigation">Kiện tụng dân sự</span><span class="cli-arrow">→</span></div>
+        <div class="card-list-item"><span class="cli-icon" aria-hidden="true">🏠</span><span class="cli-name" data-vi="Tranh chấp đất đai & tài sản" data-en="Property disputes">Tranh chấp đất đai & tài sản</span><span class="cli-arrow" aria-hidden="true">→</span></div>
+        <div class="card-list-item"><span class="cli-icon" aria-hidden="true">💍</span><span class="cli-name" data-vi="Hôn nhân & Gia đình" data-en="Marriage & Family">Hôn nhân & Gia đình</span><span class="cli-arrow" aria-hidden="true">→</span></div>
+        <div class="card-list-item"><span class="cli-icon" aria-hidden="true">📜</span><span class="cli-name" data-vi="Thừa kế & Di chúc" data-en="Inheritance & Wills">Thừa kế & Di chúc</span><span class="cli-arrow" aria-hidden="true">→</span></div>
+        <div class="card-list-item"><span class="cli-icon" aria-hidden="true">📋</span><span class="cli-name" data-vi="Hợp đồng cá nhân" data-en="Personal contracts">Hợp đồng cá nhân</span><span class="cli-arrow" aria-hidden="true">→</span></div>
+        <div class="card-list-item"><span class="cli-icon" aria-hidden="true">⚖️</span><span class="cli-name" data-vi="Kiện tụng dân sự" data-en="Civil litigation">Kiện tụng dân sự</span><span class="cli-arrow" aria-hidden="true">→</span></div>
       </div>
     </div>
   </div>
-  <div class="hero-scroll"><div class="scroll-line"></div><span data-vi="Khám phá" data-en="Explore">Khám phá</span></div>
+  <div class="hero-scroll" aria-hidden="true"><div class="scroll-line"></div><span data-vi="Khám phá" data-en="Explore">Khám phá</span></div>
 </section>
 
 <!-- PARENT BANNER -->
@@ -486,10 +766,10 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <h2 class="reveal reveal-delay-1"><span data-vi="Pháp lý dân sự<br>không còn <em>xa lạ</em>" data-en="Civil law no longer<br><em>out of reach</em>">Pháp lý dân sự<br>không còn <em>xa lạ</em></span></h2>
       <p class="overview-body reveal reveal-delay-2" data-vi="LegalWave Civil được thành lập với sứ mệnh đưa kiến thức pháp lý đến gần hơn với mọi người — không chỉ doanh nghiệp, mà còn từng cá nhân, gia đình đang đối mặt với các vấn đề pháp lý phức tạp trong cuộc sống." data-en="LegalWave Civil was founded with the mission of bringing legal knowledge closer to everyone — not just businesses, but also individuals and families facing complex legal issues in daily life.">LegalWave Civil được thành lập với sứ mệnh đưa kiến thức pháp lý đến gần hơn với mọi người — không chỉ doanh nghiệp, mà còn từng cá nhân, gia đình đang đối mặt với các vấn đề pháp lý phức tạp trong cuộc sống.</p>
       <div class="overview-list reveal reveal-delay-3">
-        <div class="overview-item"><div class="overview-dot"></div><span data-vi="Tư vấn bằng ngôn ngữ bình thường, không thuật ngữ khó hiểu" data-en="Advice in plain language, without difficult jargon">Tư vấn bằng ngôn ngữ bình thường, không thuật ngữ khó hiểu</span></div>
-        <div class="overview-item"><div class="overview-dot"></div><span data-vi="Chi phí minh bạch, báo giá rõ ràng trước khi bắt đầu" data-en="Transparent costs, clear pricing before starting">Chi phí minh bạch, báo giá rõ ràng trước khi bắt đầu</span></div>
-        <div class="overview-item"><div class="overview-dot"></div><span data-vi="Hỗ trợ kết nối luật sư hành nghề khi cần đại diện tại tòa" data-en="Connection to licensed lawyers when court representation is needed">Hỗ trợ kết nối luật sư hành nghề khi cần đại diện tại tòa</span></div>
-        <div class="overview-item"><div class="overview-dot"></div><span data-vi="Bảo mật tuyệt đối thông tin khách hàng" data-en="Absolute confidentiality of client information">Bảo mật tuyệt đối thông tin khách hàng</span></div>
+        <div class="overview-item"><div class="overview-dot" aria-hidden="true"></div><span data-vi="Tư vấn bằng ngôn ngữ bình thường, không thuật ngữ khó hiểu" data-en="Advice in plain language, without difficult jargon">Tư vấn bằng ngôn ngữ bình thường, không thuật ngữ khó hiểu</span></div>
+        <div class="overview-item"><div class="overview-dot" aria-hidden="true"></div><span data-vi="Chi phí minh bạch, báo giá rõ ràng trước khi bắt đầu" data-en="Transparent costs, clear pricing before starting">Chi phí minh bạch, báo giá rõ ràng trước khi bắt đầu</span></div>
+        <div class="overview-item"><div class="overview-dot" aria-hidden="true"></div><span data-vi="Hỗ trợ kết nối luật sư hành nghề khi cần đại diện tại tòa" data-en="Connection to licensed lawyers when court representation is needed">Hỗ trợ kết nối luật sư hành nghề khi cần đại diện tại tòa</span></div>
+        <div class="overview-item"><div class="overview-dot" aria-hidden="true"></div><span data-vi="Bảo mật tuyệt đối thông tin khách hàng" data-en="Absolute confidentiality of client information">Bảo mật tuyệt đối thông tin khách hàng</span></div>
       </div>
     </div>
     <div>
@@ -512,12 +792,12 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <h2 class="reveal reveal-delay-1"><span data-vi="Những vấn đề pháp lý<br>chúng tôi <em>giải quyết</em>" data-en="Legal issues<br>we <em>resolve</em>">Những vấn đề pháp lý<br>chúng tôi <em>giải quyết</em></span></h2>
     </div>
     <div class="problems-grid">
-      <div class="problem-card reveal"><span class="problem-icon">🏠</span><div class="problem-num" data-vi="01 — Đất đai & Tài sản" data-en="01 — Property">01 — Đất đai & Tài sản</div><h3 class="problem-title" data-vi="Tranh chấp đất đai" data-en="Property Disputes">Tranh chấp đất đai</h3><p class="problem-desc" data-vi="Tranh chấp ranh giới, tranh chấp sở hữu, đất đai chung chưa phân chia, hợp đồng mua bán bất động sản, đòi lại đất cho thuê." data-en="Boundary disputes, ownership disputes, undivided joint land, real estate purchase contracts, land recovery from tenants.">Tranh chấp ranh giới, tranh chấp sở hữu, đất đai chung chưa phân chia, hợp đồng mua bán bất động sản, đòi lại đất cho thuê.</p><div class="problem-tags"><span class="ptag" data-vi="Đất đai" data-en="Land">Đất đai</span><span class="ptag" data-vi="Bất động sản" data-en="Real estate">Bất động sản</span><span class="ptag" data-vi="Tranh chấp" data-en="Disputes">Tranh chấp</span></div></div>
-      <div class="problem-card reveal reveal-delay-1"><span class="problem-icon">💍</span><div class="problem-num" data-vi="02 — Hôn nhân & Gia đình" data-en="02 — Family Law">02 — Hôn nhân & Gia đình</div><h3 class="problem-title" data-vi="Family Law" data-en="Family Law">Family Law</h3><p class="problem-desc" data-vi="Ly hôn thuận tình & ly hôn đơn phương, phân chia tài sản hôn nhân, quyền nuôi con, cấp dưỡng, đăng ký kết hôn có yếu tố nước ngoài." data-en="Consensual & unilateral divorce, marital property division, child custody, alimony, international marriage registration.">Ly hôn thuận tình & ly hôn đơn phương, phân chia tài sản hôn nhân, quyền nuôi con, cấp dưỡng, đăng ký kết hôn có yếu tố nước ngoài.</p><div class="problem-tags"><span class="ptag" data-vi="Ly hôn" data-en="Divorce">Ly hôn</span><span class="ptag" data-vi="Quyền nuôi con" data-en="Custody">Quyền nuôi con</span><span class="ptag" data-vi="Tài sản" data-en="Assets">Tài sản</span></div></div>
-      <div class="problem-card reveal reveal-delay-2"><span class="problem-icon">📜</span><div class="problem-num" data-vi="03 — Thừa kế" data-en="03 — Inheritance">03 — Thừa kế</div><h3 class="problem-title" data-vi="Thừa kế & Di chúc" data-en="Inheritance & Wills">Thừa kế & Di chúc</h3><p class="problem-desc" data-vi="Soạn thảo di chúc hợp pháp, phân chia di sản, tranh chấp quyền thừa kế, chia tài sản không có di chúc, công nhận người thừa kế." data-en="Drafting legal wills, distributing inheritance, inheritance rights disputes, intestate distribution, recognizing heirs.">Soạn thảo di chúc hợp pháp, phân chia di sản, tranh chấp quyền thừa kế, chia tài sản không có di chúc, công nhận người thừa kế.</p><div class="problem-tags"><span class="ptag" data-vi="Di chúc" data-en="Will">Di chúc</span><span class="ptag" data-vi="Di sản" data-en="Estate">Di sản</span><span class="ptag" data-vi="Phân chia" data-en="Division">Phân chia</span></div></div>
-      <div class="problem-card reveal"><span class="problem-icon">📋</span><div class="problem-num" data-vi="04 — Hợp đồng" data-en="04 — Contracts">04 — Hợp đồng</div><h3 class="problem-title" data-vi="Hợp đồng cá nhân" data-en="Personal Contracts">Hợp đồng cá nhân</h3><p class="problem-desc" data-vi="Hợp đồng vay mượn tiền cá nhân, hợp đồng thuê tài sản, rà soát điều khoản bất lợi, tư vấn giải quyết vi phạm hợp đồng." data-en="Personal loan contracts, property rental contracts, reviewing unfavorable terms, advising on contract breach resolution.">Hợp đồng vay mượn tiền cá nhân, hợp đồng thuê tài sản, rà soát điều khoản bất lợi, tư vấn giải quyết vi phạm hợp đồng.</p><div class="problem-tags"><span class="ptag" data-vi="Vay mượn" data-en="Loans">Vay mượn</span><span class="ptag" data-vi="Thuê nhà" data-en="Rental">Thuê nhà</span><span class="ptag" data-vi="Vi phạm HĐ" data-en="Breach">Vi phạm HĐ</span></div></div>
-      <div class="problem-card reveal reveal-delay-1"><span class="problem-icon">⚖️</span><div class="problem-num" data-vi="05 — Kiện tụng" data-en="05 — Litigation">05 — Kiện tụng</div><h3 class="problem-title" data-vi="Kiện tụng dân sự" data-en="Civil Litigation">Kiện tụng dân sự</h3><p class="problem-desc" data-vi="Hỗ trợ chuẩn bị hồ sơ khởi kiện, phân tích cơ sở pháp lý, đánh giá khả năng thắng kiện, kết nối luật sư đại diện tại tòa." data-en="Support in preparing lawsuit documents, analyzing legal grounds, assessing chances of winning, connecting with courtroom representatives.">Hỗ trợ chuẩn bị hồ sơ khởi kiện, phân tích cơ sở pháp lý, đánh giá khả năng thắng kiện, kết nối luật sư đại diện tại tòa.</p><div class="problem-tags"><span class="ptag" data-vi="Khởi kiện" data-en="Lawsuit">Khởi kiện</span><span class="ptag" data-vi="Hồ sơ" data-en="Documents">Hồ sơ</span><span class="ptag" data-vi="Đại diện" data-en="Representation">Đại diện</span></div></div>
-      <div class="problem-card reveal reveal-delay-2"><span class="problem-icon">🛡️</span><div class="problem-num" data-vi="06 — Hành chính" data-en="06 — Administrative">06 — Hành chính</div><h3 class="problem-title" data-vi="Khiếu nại hành chính" data-en="Administrative Appeals">Khiếu nại hành chính</h3><p class="problem-desc" data-vi="Khiếu nại quyết định hành chính, giải phóng mặt bằng, bồi thường nhà nước, hỗ trợ thủ tục giải quyết khiếu nại tại cơ quan nhà nước." data-en="Administrative decision appeals, land clearance complaints, state compensation, assistance with complaint procedures at government agencies.">Khiếu nại quyết định hành chính, giải phóng mặt bằng, bồi thường nhà nước, hỗ trợ thủ tục giải quyết khiếu nại tại cơ quan nhà nước.</p><div class="problem-tags"><span class="ptag" data-vi="Khiếu nại" data-en="Appeal">Khiếu nại</span><span class="ptag" data-vi="Bồi thường" data-en="Compensation">Bồi thường</span><span class="ptag" data-vi="Hành chính" data-en="Administrative">Hành chính</span></div></div>
+      <div class="problem-card reveal"><span class="problem-icon" aria-hidden="true">🏠</span><div class="problem-num" data-vi="01 — Đất đai & Tài sản" data-en="01 — Property">01 — Đất đai & Tài sản</div><h3 class="problem-title" data-vi="Tranh chấp đất đai" data-en="Property Disputes">Tranh chấp đất đai</h3><p class="problem-desc" data-vi="Tranh chấp ranh giới, tranh chấp sở hữu, đất đai chung chưa phân chia, hợp đồng mua bán bất động sản, đòi lại đất cho thuê." data-en="Boundary disputes, ownership disputes, undivided joint land, real estate purchase contracts, land recovery from tenants.">Tranh chấp ranh giới, tranh chấp sở hữu, đất đai chung chưa phân chia, hợp đồng mua bán bất động sản, đòi lại đất cho thuê.</p><div class="problem-tags"><span class="ptag" data-vi="Đất đai" data-en="Land">Đất đai</span><span class="ptag" data-vi="Bất động sản" data-en="Real estate">Bất động sản</span><span class="ptag" data-vi="Tranh chấp" data-en="Disputes">Tranh chấp</span></div></div>
+      <div class="problem-card reveal reveal-delay-1"><span class="problem-icon" aria-hidden="true">💍</span><div class="problem-num" data-vi="02 — Hôn nhân & Gia đình" data-en="02 — Family Law">02 — Hôn nhân & Gia đình</div><h3 class="problem-title" data-vi="Family Law" data-en="Family Law">Family Law</h3><p class="problem-desc" data-vi="Ly hôn thuận tình & ly hôn đơn phương, phân chia tài sản hôn nhân, quyền nuôi con, cấp dưỡng, đăng ký kết hôn có yếu tố nước ngoài." data-en="Consensual & unilateral divorce, marital property division, child custody, alimony, international marriage registration.">Ly hôn thuận tình & ly hôn đơn phương, phân chia tài sản hôn nhân, quyền nuôi con, cấp dưỡng, đăng ký kết hôn có yếu tố nước ngoài.</p><div class="problem-tags"><span class="ptag" data-vi="Ly hôn" data-en="Divorce">Ly hôn</span><span class="ptag" data-vi="Quyền nuôi con" data-en="Custody">Quyền nuôi con</span><span class="ptag" data-vi="Tài sản" data-en="Assets">Tài sản</span></div></div>
+      <div class="problem-card reveal reveal-delay-2"><span class="problem-icon" aria-hidden="true">📜</span><div class="problem-num" data-vi="03 — Thừa kế" data-en="03 — Inheritance">03 — Thừa kế</div><h3 class="problem-title" data-vi="Thừa kế & Di chúc" data-en="Inheritance & Wills">Thừa kế & Di chúc</h3><p class="problem-desc" data-vi="Soạn thảo di chúc hợp pháp, phân chia di sản, tranh chấp quyền thừa kế, chia tài sản không có di chúc, công nhận người thừa kế." data-en="Drafting legal wills, distributing inheritance, inheritance rights disputes, intestate distribution, recognizing heirs.">Soạn thảo di chúc hợp pháp, phân chia di sản, tranh chấp quyền thừa kế, chia tài sản không có di chúc, công nhận người thừa kế.</p><div class="problem-tags"><span class="ptag" data-vi="Di chúc" data-en="Will">Di chúc</span><span class="ptag" data-vi="Di sản" data-en="Estate">Di sản</span><span class="ptag" data-vi="Phân chia" data-en="Division">Phân chia</span></div></div>
+      <div class="problem-card reveal"><span class="problem-icon" aria-hidden="true">📋</span><div class="problem-num" data-vi="04 — Hợp đồng" data-en="04 — Contracts">04 — Hợp đồng</div><h3 class="problem-title" data-vi="Hợp đồng cá nhân" data-en="Personal Contracts">Hợp đồng cá nhân</h3><p class="problem-desc" data-vi="Hợp đồng vay mượn tiền cá nhân, hợp đồng thuê tài sản, rà soát điều khoản bất lợi, tư vấn giải quyết vi phạm hợp đồng." data-en="Personal loan contracts, property rental contracts, reviewing unfavorable terms, advising on contract breach resolution.">Hợp đồng vay mượn tiền cá nhân, hợp đồng thuê tài sản, rà soát điều khoản bất lợi, tư vấn giải quyết vi phạm hợp đồng.</p><div class="problem-tags"><span class="ptag" data-vi="Vay mượn" data-en="Loans">Vay mượn</span><span class="ptag" data-vi="Thuê nhà" data-en="Rental">Thuê nhà</span><span class="ptag" data-vi="Vi phạm HĐ" data-en="Breach">Vi phạm HĐ</span></div></div>
+      <div class="problem-card reveal reveal-delay-1"><span class="problem-icon" aria-hidden="true">⚖️</span><div class="problem-num" data-vi="05 — Kiện tụng" data-en="05 — Litigation">05 — Kiện tụng</div><h3 class="problem-title" data-vi="Kiện tụng dân sự" data-en="Civil Litigation">Kiện tụng dân sự</h3><p class="problem-desc" data-vi="Hỗ trợ chuẩn bị hồ sơ khởi kiện, phân tích cơ sở pháp lý, đánh giá khả năng thắng kiện, kết nối luật sư đại diện tại tòa." data-en="Support in preparing lawsuit documents, analyzing legal grounds, assessing chances of winning, connecting with courtroom representatives.">Hỗ trợ chuẩn bị hồ sơ khởi kiện, phân tích cơ sở pháp lý, đánh giá khả năng thắng kiện, kết nối luật sư đại diện tại tòa.</p><div class="problem-tags"><span class="ptag" data-vi="Khởi kiện" data-en="Lawsuit">Khởi kiện</span><span class="ptag" data-vi="Hồ sơ" data-en="Documents">Hồ sơ</span><span class="ptag" data-vi="Đại diện" data-en="Representation">Đại diện</span></div></div>
+      <div class="problem-card reveal reveal-delay-2"><span class="problem-icon" aria-hidden="true">🛡️</span><div class="problem-num" data-vi="06 — Hành chính" data-en="06 — Administrative">06 — Hành chính</div><h3 class="problem-title" data-vi="Khiếu nại hành chính" data-en="Administrative Appeals">Khiếu nại hành chính</h3><p class="problem-desc" data-vi="Khiếu nại quyết định hành chính, giải phóng mặt bằng, bồi thường nhà nước, hỗ trợ thủ tục giải quyết khiếu nại tại cơ quan nhà nước." data-en="Administrative decision appeals, land clearance complaints, state compensation, assistance with complaint procedures at government agencies.">Khiếu nại quyết định hành chính, giải phóng mặt bằng, bồi thường nhà nước, hỗ trợ thủ tục giải quyết khiếu nại tại cơ quan nhà nước.</p><div class="problem-tags"><span class="ptag" data-vi="Khiếu nại" data-en="Appeal">Khiếu nại</span><span class="ptag" data-vi="Bồi thường" data-en="Compensation">Bồi thường</span><span class="ptag" data-vi="Hành chính" data-en="Administrative">Hành chính</span></div></div>
     </div>
   </div>
 </section>
@@ -529,19 +809,19 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
   <div class="how-grid">
     <div class="how-steps">
       <div class="how-step"><div class="step-num">01</div><div class="step-body"><div class="step-title" data-vi="Tư vấn ban đầu miễn phí" data-en="Free initial consultation">Tư vấn ban đầu miễn phí</div><p class="step-desc" data-vi="30 phút qua điện thoại hoặc Zalo. Chúng tôi lắng nghe, hiểu vấn đề và đưa ra định hướng ban đầu — không thu phí, không ràng buộc." data-en="30 minutes via phone or Zalo. We listen, understand the issue and provide initial guidance — no charge, no commitment.">30 phút qua điện thoại hoặc Zalo. Chúng tôi lắng nghe, hiểu vấn đề và đưa ra định hướng ban đầu — không thu phí, không ràng buộc.</p></div></div>
-      <div class="how-step"><div class="step-num">02</div><div class="step-body"><div class="step-title" data-vi="Phân tích hồ sơ" data-en="Case analysis">Phân tích hồ sơ</div><p class="step-desc" data-vi="Thu thập tài liệu liên quan, phân tích căn cứ pháp lý và đánh giá các phương án giải quyết khả thi. Báo cáo bằng văn bản rõ ràng." data-en="Collect relevant documents, analyze legal grounds and evaluate feasible resolution options. Clear written report.">Thu thập tài liệu liên quan, phân tích căn cứ pháp lý và đánh giá các phương án giải quyết khả thi. Báo cáo rõ ràng.</p></div></div>
-      <div class="how-step"><div class="step-num">03</div><div class="step-body"><div class="step-title" data-vi="Đề xuất phương án" data-en="Solution recommendation">Đề xuất phương án</div><p class="step-desc" data-vi="Đề xuất từ 2–3 phương án cụ thể: từ thương lượng ngoài tòa đến khởi kiện chính thức — kèm phân tích chi phí, thời gian và khả năng thành công." data-en="Recommend 2–3 specific options: from out-of-court negotiation to formal litigation — with cost, time and success probability analysis.">Đề xuất từ 2–3 phương án: từ thương lượng ngoài tòa đến khởi kiện — kèm phân tích chi phí, thời gian và khả năng thành công.</p></div></div>
-      <div class="how-step"><div class="step-num">04</div><div class="step-body"><div class="step-title" data-vi="Triển khai & Theo dõi" data-en="Implementation & Follow-up">Triển khai & Theo dõi</div><p class="step-desc" data-vi="Hỗ trợ thực hiện phương án đã chọn, kết nối luật sư hành nghề khi cần đại diện tại tòa, cập nhật tiến độ thường xuyên." data-en="Support implementing the chosen option, connect with licensed lawyers for court representation, provide regular progress updates.">Hỗ trợ thực hiện phương án, kết nối luật sư hành nghề khi cần đại diện tại tòa, cập nhật tiến độ thường xuyên.</p></div></div>
+      <div class="how-step"><div class="step-num">02</div><div class="step-body"><div class="step-title" data-vi="Phân tích hồ sơ" data-en="Case analysis">Phân tích hồ sơ</div><p class="step-desc" data-vi="Thu thập tài liệu liên quan, phân tích căn cứ pháp lý và đánh giá các phương án giải quyết khả thi. Báo cáo rõ ràng." data-en="Collect relevant documents, analyze legal grounds and evaluate feasible resolution options. Clear written report.">Thu thập tài liệu liên quan, phân tích căn cứ pháp lý và đánh giá các phương án giải quyết khả thi. Báo cáo rõ ràng.</p></div></div>
+      <div class="how-step"><div class="step-num">03</div><div class="step-body"><div class="step-title" data-vi="Đề xuất phương án" data-en="Solution recommendation">Đề xuất phương án</div><p class="step-desc" data-vi="Đề xuất từ 2–3 phương án: từ thương lượng ngoài tòa đến khởi kiện — kèm phân tích chi phí, thời gian và khả năng thành công." data-en="Recommend 2–3 specific options: from out-of-court negotiation to formal litigation — with cost, time and success probability analysis.">Đề xuất từ 2–3 phương án: từ thương lượng ngoài tòa đến khởi kiện — kèm phân tích chi phí, thời gian và khả năng thành công.</p></div></div>
+      <div class="how-step"><div class="step-num">04</div><div class="step-body"><div class="step-title" data-vi="Triển khai & Theo dõi" data-en="Implementation & Follow-up">Triển khai & Theo dõi</div><p class="step-desc" data-vi="Hỗ trợ thực hiện phương án, kết nối luật sư hành nghề khi cần đại diện tại tòa, cập nhật tiến độ thường xuyên." data-en="Support implementing the chosen option, connect with licensed lawyers for court representation, provide regular progress updates.">Hỗ trợ thực hiện phương án, kết nối luật sư hành nghề khi cần đại diện tại tòa, cập nhật tiến độ thường xuyên.</p></div></div>
     </div>
     <div class="how-card">
       <div class="section-label" data-vi="Cam kết của chúng tôi" data-en="Our commitment">Cam kết của chúng tôi</div>
       <h3 class="how-card-title"><span data-vi="Bạn không một mình<br>trước <em>hệ thống pháp luật</em>" data-en="You're not alone facing<br>the <em>legal system</em>">Bạn không một mình<br>trước <em>hệ thống pháp luật</em></span></h3>
       <div class="how-card-list">
-        <div class="hcl-item"><span class="hcl-check">✓</span><span data-vi="Minh bạch về năng lực — không nhận vụ ngoài khả năng" data-en="Transparent about capabilities — won't take cases beyond our ability">Minh bạch về năng lực — không nhận vụ ngoài khả năng</span></div>
-        <div class="hcl-item"><span class="hcl-check">✓</span><span data-vi="Báo giá rõ ràng trước khi bắt đầu — không phí ẩn" data-en="Clear pricing before starting — no hidden fees">Báo giá rõ ràng trước khi bắt đầu — không phí ẩn</span></div>
-        <div class="hcl-item"><span class="hcl-check">✓</span><span data-vi="Bảo mật thông tin tuyệt đối, không chia sẻ bên thứ ba" data-en="Absolute confidentiality, no third-party sharing">Bảo mật thông tin tuyệt đối, không chia sẻ bên thứ ba</span></div>
-        <div class="hcl-item"><span class="hcl-check">✓</span><span data-vi="Kết nối mạng lưới luật sư hành nghề uy tín khi cần" data-en="Network of reputable licensed lawyers when needed">Kết nối mạng lưới luật sư hành nghề uy tín khi cần</span></div>
-        <div class="hcl-item"><span class="hcl-check">✓</span><span data-vi="Hỗ trợ trực tuyến toàn quốc — không giới hạn địa lý" data-en="Nationwide online support — no geographic limits">Hỗ trợ trực tuyến toàn quốc — không giới hạn địa lý</span></div>
+        <div class="hcl-item"><span class="hcl-check" aria-hidden="true">✓</span><span data-vi="Minh bạch về năng lực — không nhận vụ ngoài khả năng" data-en="Transparent about capabilities — won't take cases beyond our ability">Minh bạch về năng lực — không nhận vụ ngoài khả năng</span></div>
+        <div class="hcl-item"><span class="hcl-check" aria-hidden="true">✓</span><span data-vi="Báo giá rõ ràng trước khi bắt đầu — không phí ẩn" data-en="Clear pricing before starting — no hidden fees">Báo giá rõ ràng trước khi bắt đầu — không phí ẩn</span></div>
+        <div class="hcl-item"><span class="hcl-check" aria-hidden="true">✓</span><span data-vi="Bảo mật thông tin tuyệt đối, không chia sẻ bên thứ ba" data-en="Absolute confidentiality, no third-party sharing">Bảo mật thông tin tuyệt đối, không chia sẻ bên thứ ba</span></div>
+        <div class="hcl-item"><span class="hcl-check" aria-hidden="true">✓</span><span data-vi="Kết nối mạng lưới luật sư hành nghề uy tín khi cần" data-en="Network of reputable licensed lawyers when needed">Kết nối mạng lưới luật sư hành nghề uy tín khi cần</span></div>
+        <div class="hcl-item"><span class="hcl-check" aria-hidden="true">✓</span><span data-vi="Hỗ trợ trực tuyến toàn quốc — không giới hạn địa lý" data-en="Nationwide online support — no geographic limits">Hỗ trợ trực tuyến toàn quốc — không giới hạn địa lý</span></div>
       </div>
       <p class="how-card-note" data-vi="Với vụ việc cần đại diện tại tòa hoặc ký văn bản pháp lý chính thức, chúng tôi kết nối với luật sư có chứng chỉ hành nghề trong mạng lưới đối tác của LegalWave." data-en="For cases requiring court representation or signing official legal documents, we connect with licensed lawyers in the LegalWave partner network.">Với vụ việc cần đại diện tại tòa hoặc ký văn bản pháp lý chính thức, chúng tôi kết nối với luật sư có chứng chỉ hành nghề trong mạng lưới đối tác của LegalWave.</p>
     </div>
@@ -556,9 +836,9 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <h2 class="reveal reveal-delay-1"><span data-vi="Những câu chuyện<br><em>thực tế</em>" data-en="Real <em>stories</em>">Những câu chuyện<br><em>thực tế</em></span></h2>
     </div>
     <div class="test-grid">
-      <div class="test-card reveal"><div class="test-stars">★★★★★</div><p class="test-text" data-vi="&ldquo;Vụ tranh chấp đất đai nhà tôi kéo dài 2 năm, qua tay 3 luật sư không giải quyết được. LegalWave Civil phân tích xong trong 1 tuần và tìm ra hướng hòa giải mà không ai nghĩ đến.&rdquo;" data-en="&ldquo;Our property dispute lasted 2 years, went through 3 lawyers with no resolution. LegalWave Civil analyzed it in 1 week and found a mediation approach nobody had thought of.&rdquo;">&ldquo;Vụ tranh chấp đất đai nhà tôi kéo dài 2 năm, qua tay 3 luật sư không giải quyết được. LegalWave Civil phân tích xong trong 1 tuần và tìm ra hướng hòa giải mà không ai nghĩ đến.&rdquo;</p><div class="test-author"><div class="test-avatar">👨</div><div><div class="test-name">Nguyễn Văn Hùng</div><div class="test-role" data-vi="Tranh chấp đất đai · Hà Nội" data-en="Property dispute · Hanoi">Tranh chấp đất đai · Hà Nội</div></div></div></div>
-      <div class="test-card reveal reveal-delay-1"><div class="test-stars">★★★★★</div><p class="test-text" data-vi="&ldquo;Tôi cần tư vấn ly hôn gấp vì chồng không hợp tác. Bảo Ngọc hướng dẫn từng bước, giải thích rõ ràng quyền lợi và cách bảo vệ quyền nuôi con. Cảm ơn rất nhiều.&rdquo;" data-en="&ldquo;I urgently needed divorce advice as my husband wouldn't cooperate. Bao Ngoc guided me step by step, clearly explained my rights and how to protect child custody. Thank you so much.&rdquo;">&ldquo;Tôi cần tư vấn ly hôn gấp vì chồng không hợp tác. Bảo Ngọc hướng dẫn từng bước, giải thích rõ ràng quyền lợi và cách bảo vệ quyền nuôi con. Cảm ơn rất nhiều.&rdquo;</p><div class="test-author"><div class="test-avatar">👩</div><div><div class="test-name">Lê Thị Mai Anh</div><div class="test-role" data-vi="Ly hôn & Quyền nuôi con · HCM" data-en="Divorce & Custody · HCM">Ly hôn & Quyền nuôi con · HCM</div></div></div></div>
-      <div class="test-card reveal reveal-delay-2"><div class="test-stars">★★★★★</div><p class="test-text" data-vi="&ldquo;Ba tôi mất không để lại di chúc, 4 anh chị em tranh nhau tài sản. LegalWave Civil tư vấn chia theo luật, giải quyết ổn thỏa không cần ra tòa. Rất chuyên nghiệp.&rdquo;" data-en="&ldquo;My father passed without a will, 4 siblings fighting over assets. LegalWave Civil advised on legal distribution, resolved it without going to court. Very professional.&rdquo;">&ldquo;Ba tôi mất không để lại di chúc, 4 anh chị em tranh nhau tài sản. LegalWave Civil tư vấn chia theo luật, giải quyết ổn thỏa không cần ra tòa. Rất chuyên nghiệp.&rdquo;</p><div class="test-author"><div class="test-avatar">👨‍👩‍👧</div><div><div class="test-name">Trần Minh Đức</div><div class="test-role" data-vi="Thừa kế · Đà Nẵng" data-en="Inheritance · Da Nang">Thừa kế · Đà Nẵng</div></div></div></div>
+      <div class="test-card reveal"><div class="test-stars" aria-label="5 sao">★★★★★</div><p class="test-text" data-vi="&ldquo;Vụ tranh chấp đất đai nhà tôi kéo dài 2 năm, qua tay 3 luật sư không giải quyết được. LegalWave Civil phân tích xong trong 1 tuần và tìm ra hướng hòa giải mà không ai nghĩ đến.&rdquo;" data-en="&ldquo;Our property dispute lasted 2 years, went through 3 lawyers with no resolution. LegalWave Civil analyzed it in 1 week and found a mediation approach nobody had thought of.&rdquo;">&ldquo;Vụ tranh chấp đất đai nhà tôi kéo dài 2 năm, qua tay 3 luật sư không giải quyết được. LegalWave Civil phân tích xong trong 1 tuần và tìm ra hướng hòa giải mà không ai nghĩ đến.&rdquo;</p><div class="test-author"><div class="test-avatar" aria-hidden="true">👨</div><div><div class="test-name">Nguyễn Văn Hùng</div><div class="test-role" data-vi="Tranh chấp đất đai · Hà Nội" data-en="Property dispute · Hanoi">Tranh chấp đất đai · Hà Nội</div></div></div></div>
+      <div class="test-card reveal reveal-delay-1"><div class="test-stars" aria-label="5 sao">★★★★★</div><p class="test-text" data-vi="&ldquo;Tôi cần tư vấn ly hôn gấp vì chồng không hợp tác. Bảo Ngọc hướng dẫn từng bước, giải thích rõ ràng quyền lợi và cách bảo vệ quyền nuôi con. Cảm ơn rất nhiều.&rdquo;" data-en="&ldquo;I urgently needed divorce advice as my husband wouldn't cooperate. Bao Ngoc guided me step by step, clearly explained my rights and how to protect child custody. Thank you so much.&rdquo;">&ldquo;Tôi cần tư vấn ly hôn gấp vì chồng không hợp tác. Bảo Ngọc hướng dẫn từng bước, giải thích rõ ràng quyền lợi và cách bảo vệ quyền nuôi con. Cảm ơn rất nhiều.&rdquo;</p><div class="test-author"><div class="test-avatar" aria-hidden="true">👩</div><div><div class="test-name">Lê Thị Mai Anh</div><div class="test-role" data-vi="Ly hôn & Quyền nuôi con · HCM" data-en="Divorce & Custody · HCM">Ly hôn & Quyền nuôi con · HCM</div></div></div></div>
+      <div class="test-card reveal reveal-delay-2"><div class="test-stars" aria-label="5 sao">★★★★★</div><p class="test-text" data-vi="&ldquo;Ba tôi mất không để lại di chúc, 4 anh chị em tranh nhau tài sản. LegalWave Civil tư vấn chia theo luật, giải quyết ổn thỏa không cần ra tòa. Rất chuyên nghiệp.&rdquo;" data-en="&ldquo;My father passed without a will, 4 siblings fighting over assets. LegalWave Civil advised on legal distribution, resolved it without going to court. Very professional.&rdquo;">&ldquo;Ba tôi mất không để lại di chúc, 4 anh chị em tranh nhau tài sản. LegalWave Civil tư vấn chia theo luật, giải quyết ổn thỏa không cần ra tòa. Rất chuyên nghiệp.&rdquo;</p><div class="test-author"><div class="test-avatar" aria-hidden="true">👨‍👩‍👧</div><div><div class="test-name">Trần Minh Đức</div><div class="test-role" data-vi="Thừa kế · Đà Nẵng" data-en="Inheritance · Da Nang">Thừa kế · Đà Nẵng</div></div></div></div>
     </div>
   </div>
 </section>
@@ -573,12 +853,42 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <br>
       <a href="#contact" class="btn-outline" style="font-size:12px;padding:10px 22px;" data-vi="Hỏi trực tiếp →" data-en="Ask directly →">Hỏi trực tiếp →</a>
     </div>
-    <div class="faq-list">
-      <div class="faq-item"><div class="faq-q"><span data-vi="Chi phí tư vấn là bao nhiêu?" data-en="How much does consultation cost?">Chi phí tư vấn là bao nhiêu?</span><span class="faq-icon">+</span></div><div class="faq-a" data-vi="Buổi đầu tiên hoàn toàn miễn phí (30 phút). Từ buổi thứ hai, chi phí phụ thuộc vào loại vụ việc và độ phức tạp. Chúng tôi báo giá rõ ràng bằng văn bản trước khi bắt đầu — không có phí ẩn." data-en="The first session is completely free (30 minutes). From the second session, costs depend on the case type and complexity. We provide a clear written quote before starting — no hidden fees.">Buổi đầu tiên hoàn toàn miễn phí (30 phút). Từ buổi thứ hai, chi phí phụ thuộc vào loại vụ việc và độ phức tạp. Chúng tôi báo giá rõ ràng bằng văn bản trước khi bắt đầu — không có phí ẩn.</div></div>
-      <div class="faq-item"><div class="faq-q"><span data-vi="Nhóm chưa phải luật sư hành nghề, có đáng tin không?" data-en="You're not licensed lawyers — can you be trusted?">Nhóm chưa phải luật sư hành nghề, có đáng tin không?</span><span class="faq-icon">+</span></div><div class="faq-a" data-vi="Chúng tôi minh bạch về năng lực: tư vấn pháp lý cơ bản, hướng dẫn thủ tục và phân tích tình huống. Với vụ việc cần đại diện tại tòa, chúng tôi kết nối với luật sư có chứng chỉ hành nghề." data-en="We are transparent about our capabilities: basic legal advice, procedural guidance and situation analysis. For cases requiring court representation, we connect with licensed lawyers.">Chúng tôi minh bạch về năng lực: tư vấn pháp lý cơ bản, hướng dẫn thủ tục và phân tích tình huống. Với vụ việc cần đại diện tại tòa, chúng tôi kết nối với luật sư có chứng chỉ hành nghề.</div></div>
-      <div class="faq-item"><div class="faq-q"><span data-vi="Tôi ở tỉnh khác có được hỗ trợ không?" data-en="Can I get support if I'm in another province?">Tôi ở tỉnh khác có được hỗ trợ không?</span><span class="faq-icon">+</span></div><div class="faq-a" data-vi="Có. Chúng tôi hỗ trợ trực tuyến toàn quốc qua Zalo, Google Meet hoặc điện thoại. Với vụ việc cần can thiệp tại địa phương, chúng tôi kết nối đối tác phù hợp." data-en="Yes. We provide nationwide online support via Zalo, Google Meet or phone. For cases requiring local intervention, we connect appropriate partners.">Có. Chúng tôi hỗ trợ trực tuyến toàn quốc qua Zalo, Google Meet hoặc điện thoại. Với vụ việc cần can thiệp tại địa phương, chúng tôi kết nối đối tác phù hợp.</div></div>
-      <div class="faq-item"><div class="faq-q"><span data-vi="Thông tin của tôi có được bảo mật không?" data-en="Is my information confidential?">Thông tin của tôi có được bảo mật không?</span><span class="faq-icon">+</span></div><div class="faq-a" data-vi="Tuyệt đối. Mọi thông tin bạn chia sẻ chỉ phục vụ cho việc tư vấn của bạn. Không chia sẻ với bên thứ ba dưới bất kỳ hình thức nào, kể cả khi kết nối với luật sư đối tác (trừ khi bạn đồng ý)." data-en="Absolutely. All information you share is used only for your consultation. Not shared with any third parties, even when connecting with partner lawyers (unless you consent).">Tuyệt đối. Mọi thông tin bạn chia sẻ chỉ phục vụ cho việc tư vấn của bạn. Không chia sẻ với bên thứ ba dưới bất kỳ hình thức nào, kể cả khi kết nối với luật sư đối tác (trừ khi bạn đồng ý).</div></div>
-      <div class="faq-item"><div class="faq-q"><span data-vi="Liên hệ thế nào để được phản hồi nhanh nhất?" data-en="How to get the fastest response?">Liên hệ thế nào để được phản hồi nhanh nhất?</span><span class="faq-icon">+</span></div><div class="faq-a" data-vi="Nhắn tin Zalo tới 0901 234 568 — thường phản hồi trong 1–2 giờ trong giờ làm việc (T2–T6, 8:00–18:00). Để lại email nếu vụ việc cần trao đổi chi tiết hơn." data-en="Message via Zalo to 0901 234 568 — usually responds within 1–2 hours during working hours (Mon–Fri, 8:00–18:00). Leave an email if the case requires more detailed discussion.">Nhắn tin Zalo tới 0901 234 568 — thường phản hồi trong 1–2 giờ trong giờ làm việc (T2–T6, 8:00–18:00). Để lại email nếu vụ việc cần trao đổi chi tiết hơn.</div></div>
+    <div class="faq-list" role="list">
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+          <span data-vi="Chi phí tư vấn là bao nhiêu?" data-en="How much does consultation cost?">Chi phí tư vấn là bao nhiêu?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" data-vi="Buổi đầu tiên hoàn toàn miễn phí (30 phút). Từ buổi thứ hai, chi phí phụ thuộc vào loại vụ việc và độ phức tạp. Chúng tôi báo giá rõ ràng bằng văn bản trước khi bắt đầu — không có phí ẩn." data-en="The first session is completely free (30 minutes). From the second session, costs depend on the case type and complexity. We provide a clear written quote before starting — no hidden fees.">Buổi đầu tiên hoàn toàn miễn phí (30 phút). Từ buổi thứ hai, chi phí phụ thuộc vào loại vụ việc và độ phức tạp. Chúng tôi báo giá rõ ràng bằng văn bản trước khi bắt đầu — không có phí ẩn.</div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+          <span data-vi="Nhóm chưa phải luật sư hành nghề, có đáng tin không?" data-en="You're not licensed lawyers — can you be trusted?">Nhóm chưa phải luật sư hành nghề, có đáng tin không?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" data-vi="Chúng tôi minh bạch về năng lực: tư vấn pháp lý cơ bản, hướng dẫn thủ tục và phân tích tình huống. Với vụ việc cần đại diện tại tòa, chúng tôi kết nối với luật sư có chứng chỉ hành nghề." data-en="We are transparent about our capabilities: basic legal advice, procedural guidance and situation analysis. For cases requiring court representation, we connect with licensed lawyers.">Chúng tôi minh bạch về năng lực: tư vấn pháp lý cơ bản, hướng dẫn thủ tục và phân tích tình huống. Với vụ việc cần đại diện tại tòa, chúng tôi kết nối với luật sư có chứng chỉ hành nghề.</div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+          <span data-vi="Tôi ở tỉnh khác có được hỗ trợ không?" data-en="Can I get support if I'm in another province?">Tôi ở tỉnh khác có được hỗ trợ không?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" data-vi="Có. Chúng tôi hỗ trợ trực tuyến toàn quốc qua Zalo, Google Meet hoặc điện thoại. Với vụ việc cần can thiệp tại địa phương, chúng tôi kết nối đối tác phù hợp." data-en="Yes. We provide nationwide online support via Zalo, Google Meet or phone. For cases requiring local intervention, we connect appropriate partners.">Có. Chúng tôi hỗ trợ trực tuyến toàn quốc qua Zalo, Google Meet hoặc điện thoại. Với vụ việc cần can thiệp tại địa phương, chúng tôi kết nối đối tác phù hợp.</div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+          <span data-vi="Thông tin của tôi có được bảo mật không?" data-en="Is my information confidential?">Thông tin của tôi có được bảo mật không?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" data-vi="Tuyệt đối. Mọi thông tin bạn chia sẻ chỉ phục vụ cho việc tư vấn của bạn. Không chia sẻ với bên thứ ba dưới bất kỳ hình thức nào, kể cả khi kết nối với luật sư đối tác (trừ khi bạn đồng ý)." data-en="Absolutely. All information you share is used only for your consultation. Not shared with any third parties, even when connecting with partner lawyers (unless you consent).">Tuyệt đối. Mọi thông tin bạn chia sẻ chỉ phục vụ cho việc tư vấn của bạn. Không chia sẻ với bên thứ ba dưới bất kỳ hình thức nào, kể cả khi kết nối với luật sư đối tác (trừ khi bạn đồng ý).</div>
+      </div>
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
+          <span data-vi="Liên hệ thế nào để được phản hồi nhanh nhất?" data-en="How to get the fastest response?">Liên hệ thế nào để được phản hồi nhanh nhất?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a" data-vi="Nhắn tin Zalo tới 0901 234 568 — thường phản hồi trong 1–2 giờ trong giờ làm việc (T2–T6, 8:00–18:00). Để lại email nếu vụ việc cần trao đổi chi tiết hơn." data-en="Message via Zalo to 0901 234 568 — usually responds within 1–2 hours during working hours (Mon–Fri, 8:00–18:00). Leave an email if the case requires more detailed discussion.">Nhắn tin Zalo tới 0901 234 568 — thường phản hồi trong 1–2 giờ trong giờ làm việc (T2–T6, 8:00–18:00). Để lại email nếu vụ việc cần trao đổi chi tiết hơn.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -610,7 +920,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
       <div class="footer-social">
         <a class="social-btn" href="#" aria-label="Facebook">fb</a>
         <a class="social-btn" href="#" aria-label="Zalo">zl</a>
-        <a class="social-btn" href="#" aria-label="X">𝕏</a>
+        <a class="social-btn" href="#" aria-label="X / Twitter">𝕏</a>
       </div>
     </div>
     <div class="footer-col">
@@ -657,6 +967,8 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
 (function() {
   'use strict';
   const html = document.documentElement;
+
+  // ===== THEME =====
   const themeToggle = document.getElementById('themeToggle');
   html.setAttribute('data-theme', localStorage.getItem('lw-theme') || 'dark');
   themeToggle.addEventListener('click', () => {
@@ -664,6 +976,8 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
     html.setAttribute('data-theme', next);
     localStorage.setItem('lw-theme', next);
   });
+
+  // ===== LANGUAGE =====
   const btnVI = document.getElementById('btnVI');
   const btnEN = document.getElementById('btnEN');
   let currentLang = localStorage.getItem('lw-lang') || 'vi';
@@ -672,6 +986,8 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
     localStorage.setItem('lw-lang', lang);
     btnVI.classList.toggle('active', lang === 'vi');
     btnEN.classList.toggle('active', lang === 'en');
+    btnVI.setAttribute('aria-pressed', lang === 'vi');
+    btnEN.setAttribute('aria-pressed', lang === 'en');
     html.setAttribute('lang', lang);
     document.querySelectorAll('[data-vi][data-en]').forEach(el => {
       const text = el.getAttribute('data-' + lang);
@@ -681,25 +997,79 @@ footer { border-top: 1px solid var(--border); background: var(--bg2); transition
   btnVI.addEventListener('click', () => applyLang('vi'));
   btnEN.addEventListener('click', () => applyLang('en'));
   applyLang(currentLang);
+
+  // ===== NAV SCROLL =====
   const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ===== MOBILE NAV =====
   const menuBtn = document.getElementById('menuBtn');
   const mobileNav = document.getElementById('mobileNav');
   const mobileClose = document.getElementById('mobileClose');
-  menuBtn.addEventListener('click', () => mobileNav.classList.add('open'));
-  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+
+  function openMenu() {
+    mobileNav.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden'; // prevent bg scroll
+  }
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', openMenu);
+  mobileClose.addEventListener('click', closeMenu);
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMenu();
+  });
+
+  // ===== SCROLL REVEAL =====
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.1, rootMargin: '0px 0px -44px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ===== FAQ =====
   document.querySelectorAll('.faq-item').forEach(item => {
-    item.querySelector('.faq-q').addEventListener('click', () => {
+    const btn = item.querySelector('.faq-q');
+    btn.addEventListener('click', () => {
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+    // Keyboard support
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        btn.click();
+      }
     });
   });
+
 })();
 </script>
 </body>
